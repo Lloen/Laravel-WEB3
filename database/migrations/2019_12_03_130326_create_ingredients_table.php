@@ -15,6 +15,11 @@ class CreateIngredientsTable extends Migration
     {
         Schema::create('ingredients', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name', 255);
+            $table->text('wikipedia_id');
+            $table->bigInteger('created_by');
+            $table->bigInteger('updated_by');
+            $table->
             $table->timestamps();
         });
     }

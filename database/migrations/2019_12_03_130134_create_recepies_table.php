@@ -15,6 +15,12 @@ class CreateRecepiesTable extends Migration
     {
         Schema::create('recepies', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name', 255);
+            $table->text('description');
+            $table->integer('prep_time');
+            $table->integer('cook_time');
+            $table->string('created_by');
+            $table->bigInteger('votes');
             $table->timestamps();
         });
     }
