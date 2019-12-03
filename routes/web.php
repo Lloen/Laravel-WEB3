@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,6 +10,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+use App\Food;
+
+Route::get('/', function () {return view('welcome');});
+Route::get('food', 'FoodController@getIndex');
+
+Route::get('food/{id}', function ($id) {
+    $food = Food::findOrFail($id);
+    return view('foodShow', compact('food'));
 });
