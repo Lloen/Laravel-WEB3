@@ -7,4 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class FoodIngredient extends Model
 {
     //
+    public function recipe()
+    {
+        return $this->belongsTo('App\Recipe');
+    }
+
+    public function ingredient()
+    {
+        return $this->belongsTo('App\Ingredient');
+    }
 }

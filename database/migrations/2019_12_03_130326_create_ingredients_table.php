@@ -16,11 +16,15 @@ class CreateIngredientsTable extends Migration
         Schema::create('ingredients', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 255);
-            $table->text('wikipedia_id');
-            $table->bigInteger('created_by');
-            $table->bigInteger('updated_by');
-            $table->
+            $table->string('wikipedia_id')->nullable();
+            $table->string('name_scientific')->nullable();
+            $table->bigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('created_by');
             $table->timestamps();
+        });
+        
+        Schema::table('ingredients', function(Blueprint $table) {
+            $table->foreign('created_by')->references('id')->on('users');
         });
     }
 
