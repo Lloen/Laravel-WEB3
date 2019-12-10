@@ -1,0 +1,1 @@
+<div class="footer">© Copyright 2019 Web3 Daniel & Loen </div>

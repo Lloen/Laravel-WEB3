@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <title>Laravel</title>
-
-        <!-- Styles -->
         <style>
-            html{
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-            }
-
             .post{
                 width: 800px;
                 height: 160px;
@@ -69,7 +54,7 @@
 
     <body>
         <div class="title">
-            <h> FOODS </h>
+            <h> RECIPES </h>
         </div>
 
         <div class="content">
@@ -78,15 +63,29 @@
                     </div>
 
                         <div class="name">
-                            <h3>{{$food->name}}</h3>
+                            <h3>{{$recipe->name}}</h3>
                         </div>
 
                         <div class="description">
-                            <P> Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
-                            Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum </p>
+                            <P>{{$recipe->description}} </p>
                         </div>
-                
+
+                        <div class="prep_time">
+                            <P>{{$recipe->prep_time}} </p>
+                        </div>
+
+                        <div class="cooking_time">
+                            <P>{{$recipe->cooking_time}} </p>
+                        </div>
+
+                        <div class="votes">
+                            <P>{{$recipe->votes}} </p>
+                        </div>
+
+                        <div class="created_by">
+                            <P>{{$recipe->create_by}} </p>
+                        </div>
+
                     <button type="button" value="button">  EDIT </button>
                     <button type="button" value="button">  DELETE </button>
 
