@@ -1,96 +1,34 @@
-<html>
-    <head>
-        <style>
-            .post{
-                width: 800px;
-                height: 160px;
-                clear: both;
-                padding: 20px;
-                margin: 20px;
-                border: solid;
-            }
+@extends('layouts.app')
 
-            .clearfix {
-                overflow: auto;
-            }
-
-            .name{
-                text-align: center;
-            }
-
-            button{
-
-                width: 100px;
-                height: 50px;
-                float: right;
-                vertical-align: bottom;
-                background-color: #4CAF50; /* Green */
-                border: none;
-                color: white;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-            }
-            .image{
-                width: 150px;
-                height: 150px;
-                border-style: solid;
-                float: left;
-
-            }
-
-            .title{
-                margin:50px;
-
-            }
-
-            .description{
-
-
-            }
-            
-        </style>
-    </head>
-
-    <body>
-        <div class="title">
-            <h> RECIPES </h>
+@section('content')
+<div class="content">
+    <div class="post">
+        <div class="image clearfix">
         </div>
 
-        <div class="content">
-                <div class="post">
-                    <div class="image clearfix">
-                    </div>
-
-                        <div class="name">
-                            <h3>{{$recipe->name}}</h3>
-                        </div>
-
-                        <div class="description">
-                            <P>{{$recipe->description}} </p>
-                        </div>
-
-                        <div class="prep_time">
-                            <P>{{$recipe->prep_time}} </p>
-                        </div>
-
-                        <div class="cooking_time">
-                            <P>{{$recipe->cooking_time}} </p>
-                        </div>
-
-                        <div class="votes">
-                            <P>{{$recipe->votes}} </p>
-                        </div>
-
-                        <div class="created_by">
-                            <P>{{$recipe->create_by}} </p>
-                        </div>
-
-                    <button type="button" value="button">  EDIT </button>
-                    <button type="button" value="button">  DELETE </button>
-
-                </div>              
+        <div class="name">
+            <h3>Recipe: {{$recipe->name}}</h3>
         </div>
-    </body>
 
-</html>
+        <div class="description">
+            <P>Description: {{$recipe->description}} </p>
+        </div>
+
+        <div class="prep_time">
+            <P>Preparation time: {{$recipe->prep_time}} </p>
+        </div>
+
+        <div class="cooking_time">
+            <P>Cooking time: {{$recipe->cooking_time}} </p>
+        </div>
+
+        <div class="votes">
+            <P>Votes: {{$recipe->votes}} </p>
+        </div>
+
+        <div class="created_by">
+            <P>Created by: {{$recipe->create_by}} </p>
+        </div>
+    </div>
+</div>
+@stop

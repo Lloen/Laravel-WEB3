@@ -10,10 +10,18 @@
 |
 */
 
-use App\Food;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {return view('home');});
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/about', function () {return view('about');});
 
-Route::resource('recipes', 'RecipeController');
+Route::get('/recipes/delete/{id}', 'RecipeController@delete')->name('recipes.delete');
+Route::resource('recipes', 'RecipeController')->middleware('auth');
+
+Auth::routes();
+
+Route::get('/profile/{id}', 'UserController@show')->middleware('auth');

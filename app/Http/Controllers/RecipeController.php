@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-Use App\Recipe;
+use App\Recipe;
+use Illuminate\Support\Facades\Auth;
 
 class RecipeController extends Controller
 {
@@ -14,9 +15,8 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        $recipes = \App\Recipe::all();
-
-        return view('recipes/viewrecipes', ['recipes' => $recipes]);
+        $recipes = Recipe::all();
+        return view('recipes.index', compact('recipes'));
     }
 
     /**
@@ -26,7 +26,7 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        return view('create');
+        return view('recipes.create');
     }
 
     /**
@@ -37,15 +37,24 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        \App\Product::create([
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'prep_time' => 'required',
+            'cook_time' => 'required'
+        ]);
+
+        $recipe = new Recipe([
             'name' => $request->get('name'),
             'description' => $request->get('description'),
             'prep_time' => $request->get('prep_time'),
-            'cook_time' => $request->get('cooking_time'),
-            'cook_time' => $request->get('cooking_time'),
-          ]);
-  
-          return redirect('/recipes');
+            'cook_time' => $request->get('cook_time'),
+            'votes' => "0",
+            'created_by' => Auth::user()->id
+        ]);
+
+        $recipe->save();
+        return redirect('/recipes')->with('success', 'Recipe has been added!');
     }
 
     /**
@@ -68,7 +77,9 @@ class RecipeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $recipe = Recipe::find($id);
+        
+        return view('recipes.edit', compact('recipe'));
     }
 
     /**
@@ -80,7 +91,36 @@ class RecipeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'prep_time' => 'required',
+            'cook_time' => 'required'
+        ]);
+
+        $recipe = Recipe::find($id);
+
+        $recipe->name = $request->name;
+        $recipe->description = $request->description;
+        $recipe->prep_time = $request->prep_time;
+        $recipe->cook_time = $request->cook_time;
+
+        $recipe->save();
+
+        return redirect('/recipes')->with('success', 'Recipe has been updated!');
+    }
+
+    /**
+     * Show the form for deleting the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
+    {
+        $recipe = Recipe::find($id);
+
+        return view('recipes.delete', compact('recipe'));
     }
 
     /**
@@ -91,6 +131,9 @@ class RecipeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $recipe = Recipe::find($id);
+        $recipe->delete();
+
+        return redirect('/recipes')->with('success', 'Recipe has been deleted!');
     }
 }
