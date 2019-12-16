@@ -91,6 +91,7 @@ class RecipeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->authorize('update', $recipe);
         $request->validate([
             'name' => 'required',
             'description' => 'required',
@@ -118,6 +119,7 @@ class RecipeController extends Controller
      */
     public function delete($id)
     {
+        $this->authorize('delete', $recipe);
         $recipe = Recipe::find($id);
 
         return view('recipes.delete', compact('recipe'));
