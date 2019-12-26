@@ -20,10 +20,10 @@
 
 <div class="content">
     <div class="title">
-        Home Page
+        Welcome
     </div>
     <p>
-        There are {{$recipesCount ?? ''}} total recipes.
+        There are a total of {{$recipesCount ?? '0'}} recipes.
     </p>
 </div>
 

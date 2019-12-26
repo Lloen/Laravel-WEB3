@@ -22,6 +22,8 @@ Route::get('/about', function () {return view('about');});
 Route::get('/recipes/delete/{id}', 'RecipeController@delete')->name('recipes.delete');
 Route::resource('recipes', 'RecipeController')->middleware('auth');
 
-Auth::routes();
+Route::get('/profile/{id}', 'UserController@show')->name('users.show');
+Route::get('/profile/{id}/edit', 'UserController@edit')->name('users.edit');
+Route::post('/profile', 'UserController@update')->name('users.update');
 
-Route::get('/profile/{id}', 'UserController@show')->middleware('auth');
+Auth::routes();

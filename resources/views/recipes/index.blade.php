@@ -39,13 +39,13 @@
         $('#btnAddRecipe').on('click', function(e) {
             e.preventDefault();
             var link = this.href;
+            $('.modal').modal('toggle');
             $('.modal').load(link, function() {
-                $('.modal').modal('toggle')
                 $('select').selectpicker();
             })
         });
 
-        
+
     });
 </script>
 

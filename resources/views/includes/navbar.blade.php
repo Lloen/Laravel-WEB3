@@ -58,7 +58,13 @@
 </nav>
 
 <div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-
-  </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

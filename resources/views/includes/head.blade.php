@@ -5,6 +5,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <title>{{ config('app.name', 'Laravel') }}</title>
+<link rel="icon" href="{{ URL::asset('/images/favicon.ico') }}" />
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}" defer></script>
@@ -14,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
 <!-- Styles -->
-<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('/css/app.css')  }}">
 
 <meta name="description" content="Web3 Laravel Project">
 
