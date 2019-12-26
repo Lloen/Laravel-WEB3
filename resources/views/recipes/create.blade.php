@@ -32,6 +32,15 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="description">Ingredients</label>
+                        <select class="selectpicker  show-tick" data-live-search="true" multiple title="Choose an ingredient...">
+                            @foreach ($ingredients as $ingredient)
+                            <option>{{$ingredient->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="prep_time">Prep time</label>
                         <input class="form-control" id="recipeInputPrepTime" name="prep_time">
                     </div>

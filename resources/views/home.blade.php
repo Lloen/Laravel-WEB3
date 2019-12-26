@@ -22,6 +22,9 @@
     <div class="title">
         Home Page
     </div>
+    <p>
+        There are {{$recipesCount ?? ''}} total recipes.
+    </p>
 </div>
 
 @stop

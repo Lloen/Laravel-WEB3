@@ -20,6 +20,7 @@ class CreateRecipesTable extends Migration
             $table->integer('prep_time');
             $table->integer('cook_time');
             $table->bigInteger('votes');
+            $table->binary('picture');
             $table->unsignedBigInteger('created_by');
             $table->timestamps();
         });

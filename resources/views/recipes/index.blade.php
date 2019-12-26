@@ -34,7 +34,6 @@
     }
 </style>
 
-@section('scripts')
 <script type="text/javascript">
     $(document).ready(function() {
         $('#btnAddRecipe').on('click', function(e) {
@@ -42,10 +41,12 @@
             var link = this.href;
             $('.modal').load(link, function() {
                 $('.modal').modal('toggle')
+                $('select').selectpicker();
             })
         });
+
+        
     });
 </script>
-@endsection
 
 @stop

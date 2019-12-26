@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ingredient;
 use Illuminate\Http\Request;
 use App\Recipe;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,8 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        return view('recipes.create');
+        $ingredients = Ingredient::select('name')->get();
+        return view('recipes.create', compact('ingredients'));
     }
 
     /**
@@ -91,15 +93,17 @@ class RecipeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->authorize('update', $recipe);
         $request->validate([
             'name' => 'required',
             'description' => 'required',
             'prep_time' => 'required',
             'cook_time' => 'required'
         ]);
-
+        
         $recipe = Recipe::find($id);
+
+        $this->authorize('update', $recipe);
+
 
         $recipe->name = $request->name;
         $recipe->description = $request->description;
@@ -119,8 +123,8 @@ class RecipeController extends Controller
      */
     public function delete($id)
     {
-        $this->authorize('delete', $recipe);
         $recipe = Recipe::find($id);
+        $this->authorize('delete', $recipe);
 
         return view('recipes.delete', compact('recipe'));
     }
