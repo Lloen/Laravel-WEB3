@@ -23,8 +23,9 @@
     </div>
     @endforeach
 </div>
-
+@if (Auth::check())
 <a href="{{ route('recipes.create') }}" class="btn btn-success fixedbutton btn-lg shadow " id="btnAddRecipe">Add</a>
+@endif
 
 <style>
     .fixedbutton {

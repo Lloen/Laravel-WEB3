@@ -6,20 +6,10 @@
         </button>
     </div>
     <div class="modal-body">
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>    
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div><br />
-        @endif
-
         <div class="flex-center position-ref full-height">
 
             <div class="content">
-                <form method="POST" action="{{ route('users.update', $user->id) }}">
+                <form method="POST" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data">
                     @method('POST')
                     @csrf
                     <div class="form-group">
@@ -29,7 +19,7 @@
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input class="form-control" id="emailInputName" name="email" value="{{ $user->email }}">
+                        <input class="form-control" id="emailInputEmail" name="email" value="{{ $user->email }}">
                     </div>
 
                     <div class="form-group">

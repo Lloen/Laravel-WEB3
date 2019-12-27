@@ -23,15 +23,6 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $recipes = DB::table('recipes')->where('created_by', '=', $id)->get();
-
-        // if($user->avatar == null) {
-        //     $user->avatar = Storage::disk('local')->get('\images\User_Placeholder.png');
-        // }
-
-        // $img = Image::make(Storage::disk('local')->get('\images\User_Placeholder.png'));
-        // $img->resize(100, 100);
-        
-        // $user->avatar = $img;
        
         return view('profiles.show', compact('user', 'recipes'));
     }
@@ -51,13 +42,21 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|max:225|'.Rule::unique('users')->ignore($user->id),
-            //'avatar' => 'sometimes'|'image'|'mimes:jpg,jpeg,bmp,svg,png'|'max:2000'
+            //'avatar' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
         ]);
 
+        if(request()->has('avatar')) {
+            $avatarName = $userId.'-'.time().'.'.request()->avatar->getClientOriginalExtension();
+            $request->avatar->storeAs('/images/users', $avatarName);
+
+            $user->avatar = $avatarName;
+        }
+
         $user->name = $request->name;
+        $user->email = $request->email;
 
         $user->save();
 
-        return redirect('/profile/'.$userId)->with('success', 'Data has been updated!');
+        return redirect('/profile/'.$userId)->with('success', 'Profile has been updated!');
     }
 }

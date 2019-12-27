@@ -17,6 +17,11 @@
                 <li>
                     <a class="nav-link" href="/recipes">Recipes</a>
                 </li>
+                @if (Auth::check())
+                <li>
+                    <a class="nav-link" href="/ingredients">Ingredients</a>
+                </li>
+                @endif
             </ul>
 
             <!-- Right Side Of Navbar -->

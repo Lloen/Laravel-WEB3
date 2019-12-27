@@ -17,7 +17,9 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'admin'.'@admin.com',
-            'password' => bcrypt('admin')
+            'password' => bcrypt('admin'),
+            'created_at' => date("Y-m-d h:i:s"),
+            'updated_at' => date("Y-m-d h:i:s")
         ]);
         factory(\App\User::class, 5)->create();
     }

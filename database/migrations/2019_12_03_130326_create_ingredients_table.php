@@ -21,7 +21,7 @@ class CreateIngredientsTable extends Migration
             $table->string('wikipedia_id')->nullable();
             $table->string('name_scientific')->nullable();
             $table->string('group')->nullable();
-            $table->bigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('updated_by');
             $table->unsignedBigInteger('created_by');
             $table->timestamps();
         });
@@ -30,6 +30,7 @@ class CreateIngredientsTable extends Migration
         
         Schema::table('ingredients', function(Blueprint $table) {
             $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 

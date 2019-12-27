@@ -36,7 +36,8 @@ class IngredientsTableSeeder extends Seeder
                 'name_scientific' => $obj->name_scientific,
                 'group' => $obj->food_group,
                 'picture' => $img,
-                'created_by' => 1
+                'created_by' => 1,
+                'updated_by' => 1
             ));
         }
     }

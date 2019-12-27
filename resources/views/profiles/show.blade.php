@@ -2,6 +2,24 @@
 
 @section('content')
 
+@if ($errors->any())
+<div class="alert alert-danger alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div><br />
+@endif
+
+@if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <strong>{{ $message }}</strong>
+</div>
+@endif
+
 <div class="accordion" id="accordionExample">
     <div class="card">
         <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne">
@@ -14,7 +32,7 @@
             <div class="card-body">
                 <div class="d-flex flex-row">
                     <div class="col-sm">
-                        <img class="img-circle" src="data:image/png;base64,{{ chunk_split(base64_encode($user->avatar)) }}">
+                        <img class="rounded float-left" src="/storage/images/users/{{ $user->avatar }}">
                     </div>
                     <div class="col-sm">
                         <p>Name: {{ $user->name }}</p>

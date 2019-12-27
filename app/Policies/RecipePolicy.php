@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Recipe;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class RecipePolicy
 {
@@ -18,7 +19,7 @@ class RecipePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user = Auth::user();
     }
 
     /**
@@ -30,7 +31,7 @@ class RecipePolicy
      */
     public function view(User $user, Recipe $recipe)
     {
-        //
+        return $user = Auth::user();
     }
 
     /**
@@ -41,7 +42,7 @@ class RecipePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user = Auth::user();
     }
 
     /**

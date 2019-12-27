@@ -23,7 +23,7 @@
         Welcome
     </div>
     <p>
-        There are a total of {{$recipesCount ?? '0'}} recipes.
+        There is a total of {{$recipesCount ?? '0'}} recipes in this book.
     </p>
 </div>
 

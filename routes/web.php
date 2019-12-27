@@ -20,7 +20,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/about', function () {return view('about');});
 
 Route::get('/recipes/delete/{id}', 'RecipeController@delete')->name('recipes.delete');
-Route::resource('recipes', 'RecipeController')->middleware('auth');
+Route::resource('recipes', 'RecipeController');
 
 Route::get('/profile/{id}', 'UserController@show')->name('users.show');
 Route::get('/profile/{id}/edit', 'UserController@edit')->name('users.edit');

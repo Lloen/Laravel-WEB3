@@ -22,6 +22,9 @@
     <div class="title">
         About Us
     </div>
+    <p>
+        A WEB3 project.
+    </p>
 </div>
 
 @stop
