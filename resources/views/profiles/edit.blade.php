@@ -7,7 +7,6 @@
     </div>
     <div class="modal-body">
         <div class="flex-center position-ref full-height">
-
             <div class="content">
                 <form method="POST" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data">
                     @method('POST')

@@ -11,13 +11,13 @@
     @foreach ($recipes as $recipe)
     <div class="col-sm-3">
         <div class="card h-100">
-            <img src="https://www.cimec.co.za/wp-content/uploads/2018/07/4-Unique-Placeholder-Image-Services-for-Designers.png" class="card-img-top" alt="...">
+            <img src="storage\images\recipes\{{ $recipe->picture }}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{ $recipe->name }}</h5>
                 <p class="card-text">{{ $recipe->description }}</p>
             </div>
             <div class="card-footer text-muted">
-                <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-primary">View Recipe</a>
+                <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-primary w-100">View Recipe</a>
             </div>
         </div>
     </div>
