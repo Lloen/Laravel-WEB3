@@ -40,14 +40,15 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="prep_time">Prep time</label>
-                        <input class="form-control" id="recipeInputPrepTime" name="prep_time">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="cook_time">Cook time</label>
-                        <input class="form-control" id="recipeInputCookTime" name="cook_time">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="prep_time">Prep time (Minutes)</label>
+                            <input type="number" min="0" step="1" class="form-control" id="recipeInputPrepTime" name="prep_time">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="cook_time">Cook time (Minutes)</label>
+                            <input type="number" min="0" step="1" class="form-control" id="recipeInputCookTime" name="cook_time">
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-success">Submit</button>

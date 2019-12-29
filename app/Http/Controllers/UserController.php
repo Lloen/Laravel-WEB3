@@ -42,12 +42,13 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|max:225|'.Rule::unique('users')->ignore($user->id),
-            //'avatar' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
+            'avatar' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
         ]);
 
         if(request()->has('avatar')) {
+            $avatar = $request->file('avatar');
             $avatarName = $userId.'-'.time().'.'.request()->avatar->getClientOriginalExtension();
-            $request->avatar->storeAs('/images/users', $avatarName);
+            Image::make($avatar)->resize(300, 300)->storeAs('/images/users', $avatarName);
 
             $user->avatar = $avatarName;
         }
