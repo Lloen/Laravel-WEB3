@@ -1,33 +1,54 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content">
-    <div class="post">
-        <div class="image clearfix">
+<div class="d-flex justify-content-center">
+    <div class="card shadow w-100 ml-5 mr-5">
+        <div class="card-header">
+            <div class="d-flex">
+                <div class="row">
+                    <div class="col-sm">
+                        <img class="rounded float-left" src="/storage/images/recipes/{{ $recipe->picture }}">
+                    </div>
+                    <div class="d-flex flex-column">
+                        <h1 class="card-title">
+                            {{$recipe->name}}
+                        </h1>
+                        <div class="description">
+                            <p>{{$recipe->description}} </p>
+                        </div>
+                        <div class="mt-auto">
+                            <div class="votes">
+                                <p><i class="far fa-heart mr-2"></i> {{$recipe->votes}} </p>
+                            </div>
+                            <div class="created_by">
+                                <p>
+                                    <i class="fas fa-user mr-2"></i>
+                                    <a href="{{ url('/profile/'.$recipe->user->id) }}">{{$recipe->user->name}}</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="name">
-            <h3>Recipe: {{$recipe->name}}</h3>
-        </div>
-
-        <div class="description">
-            <P>Description: {{$recipe->description}} </p>
-        </div>
-
-        <div class="prep_time">
-            <P>Preparation time: {{$recipe->prep_time}} </p>
-        </div>
-
-        <div class="cooking_time">
-            <P>Cooking time: {{$recipe->cooking_time}} </p>
-        </div>
-
-        <div class="votes">
-            <P>Votes: {{$recipe->votes}} </p>
-        </div>
-
-        <div class="created_by">
-            <P>Created by: {{$recipe->create_by}} </p>
+        <div class="card-body">
+            <div class="d-flex flex-row mb-3">
+                <i class="far fa-clock fa-3x p-2"></i>
+                <div class="prep_time p-2">
+                    <p>Prep:</br>
+                        {{$recipe->prep_time}}</p>
+                </div>
+                <div class="cooking_time p-2">
+                    <p>Cook: </br>
+                        {{$recipe->cook_time}}</p>
+                </div>
+            </div>
+            <div class="d-flex flex-row mb-3">
+                <i class="fas fa-utensils fa-3x p-2"></i>
+            </div>
+            <div class="d-flex flex-row mb-3">
+                <i class="fas fa-list-ol fa-3x p-2"></i>
+            </div>
         </div>
     </div>
 </div>

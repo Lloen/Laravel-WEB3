@@ -15,8 +15,13 @@ class Recipe extends Model
         'created_by'
     ];
 
-    public function foodIngredients()
+    public function foodIngredient()
     {
         return $this->hasMany('App\FoodIngredient');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'created_by');
     }
 }

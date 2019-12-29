@@ -44,11 +44,11 @@
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/profile/{{ Auth::user()->id }}">
-                            Profile
+                            <div><i class="mr-1 fas fa-user"></i> Profile</div> 
                         </a>
 
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                           <div><i class="mr-1 fas fa-sign-out-alt"></i> Logout</div> 
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

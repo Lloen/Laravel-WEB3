@@ -32,12 +32,33 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="description">Ingredients</label>
-                        <select class="selectpicker  show-tick" data-live-search="true" multiple title="Choose an ingredient...">
-                            @foreach ($ingredients as $ingredient)
-                            <option>{{$ingredient->name}}</option>
-                            @endforeach
-                        </select>
+                        <label for="ingredients">Ingredients</label>
+                        <table class="table table-borderless border">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Ingredient</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Of</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <select class="selectpicker show-tick w-100" data-live-search="true" title="Add an ingredient..">
+                                            @foreach ($ingredients as $ingredient)
+                                            <option>{{$ingredient->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="number" min="0" step="1" class="form-control" id="ingredientAmount1" name="ingredient_amount_1">
+                                    </td>
+                                    <td>
+                                        <input type="number" min="0" step="1" class="form-control" id="ingredientVatriable1" name="ingredient_variable_1">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                     <div class="form-row">
@@ -57,3 +78,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('.selectpicker').on('changed.bs.select', function(e, clickedIndex, isSelected, previousValue) {
+        $('.table').find('tbody:last').append('<tr></tr>');
+    });
+</script>

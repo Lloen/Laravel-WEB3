@@ -9,9 +9,13 @@
 
 <div class="row">
     @foreach ($recipes as $recipe)
-    <div class="col-sm-3">
+    <div class="col-sm-3"> 
         <div class="card h-100">
+            @if (Auth::check())
             <img src="storage\images\recipes\{{ $recipe->picture }}" class="card-img-top" alt="...">
+            @else
+            <img src="storage\images\recipes\{{ $recipe->picture }}" class="card-img-top" style="filter: blur(8px);" alt="...">
+            @endif
             <div class="card-body">
                 <h5 class="card-title">{{ $recipe->name }}</h5>
                 <p class="card-text">{{ $recipe->description }}</p>
@@ -24,7 +28,7 @@
     @endforeach
 </div>
 @if (Auth::check())
-<a href="{{ route('recipes.create') }}" class="btn btn-success fixedbutton btn-lg shadow " id="btnAddRecipe">Add</a>
+<a href="{{ route('recipes.create') }}" class="btn btn-success rounded-circle fixedbutton btn-lg shadow " id="btnAddRecipe"><i class="fas fa-plus"></i></a>
 @endif
 
 <style>

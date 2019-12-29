@@ -48,7 +48,8 @@ class UserController extends Controller
         if(request()->has('avatar')) {
             $avatar = $request->file('avatar');
             $avatarName = $userId.'-'.time().'.'.request()->avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(300, 300)->storeAs('/images/users', $avatarName);
+            $img = Image::make($avatar)->resize(300, 300);
+            $img->save(storage_path('app/public/images/users/' . $avatarName));
 
             $user->avatar = $avatarName;
         }
