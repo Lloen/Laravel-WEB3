@@ -12,7 +12,8 @@ class Recipe extends Model
         'prep_time',
         'cook_time',
         'votes',
-        'created_by'
+        'created_by',
+        'picture'
     ];
 
     public function foodIngredient()

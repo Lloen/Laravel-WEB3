@@ -27,7 +27,7 @@ class IngredientsTableSeeder extends Seeder
                 $img = (string) Image::make($imgUrl)->encode('jpg', 75);
             }
             else
-                $img = Storage::disk('local')->get(storage_path('app/public/images/ingredients/Ingredient_Placeholder.png'));
+                $img = storage_path('app/public/images/ingredients/Ingredient_Placeholder.png');
 
             Ingredient::create(array(
                 'name' => $obj->name,

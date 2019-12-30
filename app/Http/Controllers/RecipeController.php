@@ -7,7 +7,8 @@ use App\Ingredient;
 use Illuminate\Http\Request;
 use App\Recipe;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManagerStatic as Image;
+
 
 class RecipeController extends Controller
 {
@@ -31,7 +32,7 @@ class RecipeController extends Controller
     public function create()
     {
         if (Auth::check()) {
-            $ingredients = Ingredient::select('id', 'name')->get();
+            $ingredients = Ingredient::select('id', 'name')->orderBy('name', 'ASC')->get();
 
             return view('recipes.create', compact('ingredients'));
         } else {
@@ -49,11 +50,12 @@ class RecipeController extends Controller
     {
         if (Auth::check()) {
             $request->validate([
-                'name' => 'required',
-                'description' => 'required',
+                'name' => 'required|max:35',
+                'description' => 'required|max:255',
                 'prep_time' => 'required',
                 'cook_time' => 'required',
-                'ingredients' => 'required'
+                'ingredients' => 'required',
+                'picture' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
             ]);
 
             $recipe = new Recipe([
@@ -64,6 +66,15 @@ class RecipeController extends Controller
                 'votes' => "0",
                 'created_by' => Auth::user()->id
             ]);
+
+            if(request()->has('picture')) {
+                $picture = $request->file('picture');
+                $pictureName = time().'.'.request()->picture->getClientOriginalExtension();
+                $img = Image::make($picture)->resize(715, 479);
+                $img->save(storage_path('app/public/images/recipes/' . $pictureName));
+    
+                $recipe->picture = $pictureName;
+            }
 
             $recipe->save();
            
@@ -130,16 +141,16 @@ class RecipeController extends Controller
     {
         if (Auth::check()) {
             $request->validate([
-                'name' => 'required',
-                'description' => 'required',
+                'name' => 'required|max35',
+                'description' => 'required|max255',
                 'prep_time' => 'required',
-                'cook_time' => 'required'
+                'cook_time' => 'required',
+                'picture' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
             ]);
 
             $recipe = Recipe::find($id);
 
             $this->authorize('update', $recipe);
-
 
             $recipe->name = $request->name;
             $recipe->description = $request->description;

@@ -31,6 +31,11 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="avatar">Picture</label>
+                        <input type="file" class="form-control" id="recipeInputPicture" name="picture">
+                    </div>
+
+                    <div class="form-group">
                         <label for="ingredients">Ingredients</label>
                         <table class="table table-borderless border">
                             <thead>
@@ -44,7 +49,7 @@
                             <tbody id="ingredientData">
                                 <tr>
                                     <td>
-                                        <select class="selectpicker show-tick w-100" data-live-search="true" title="Add an ingredient..">
+                                        <select class="selectpicker show-tick" data-width="100%" data-live-search="true" title="Add an ingredient..">
                                             @foreach ($ingredients as $ingredient)
                                             <option value="{{ $ingredient->id }}" >{{ $ingredient->name }}</option>
                                             @endforeach
@@ -89,7 +94,7 @@
 
 <script>
     $('#btnNewIngredient').on('click', function(e) {
-        $('.table').find('tbody:last').append('<tr><td><select class="selectpicker show-tick w-100" data-live-search="true" title="Add an ingredient..">@foreach ($ingredients as $ingredient) <option value="{{ $ingredient->id }}">{{$ingredient->name}}</option>@endforeach </select></td><td><input type="number" min="0" step="0.01" class="form-control" id="ingredientAmount1" name="ingredient_amount_1"></td><td><input class="form-control" id="ingredientUnit" name="ingredient_variable_1"></td><td><button id="btnDeleteIngredient" type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button></td></tr>');
+        $('.table').find('tbody:last').append('<tr><td><select class="selectpicker" data-width="100%" show-tick data-live-search="true" title="Add an ingredient..">@foreach ($ingredients as $ingredient) <option value="{{ $ingredient->id }}">{{$ingredient->name}}</option>@endforeach </select></td><td><input type="number" min="0" step="0.01" class="form-control" id="ingredientAmount1" name="ingredient_amount_1"></td><td><input class="form-control" id="ingredientUnit" name="ingredient_variable_1"></td><td><button id="btnDeleteIngredient" type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button></td></tr>');
         $('select').selectpicker();
     });
 
@@ -109,7 +114,7 @@
         // Go thourgh the table and put each cell in a value for JSON
         var rows = ($('.table tr').length);
         rows =- 1;
-        var data = $('.table tr:gt(0):lt('+rows+')').map(function() {
+        var dataIngredients = $('.table tr:gt(0):lt('+rows+')').map(function() {
             return {
                 id: $(this.cells[0]).find("select").val(),
                 amount: $(this.cells[1]).find("input[type='number']").val(),
@@ -117,24 +122,29 @@
             };
         }).get();
 
-        alert(JSON.stringify(data, null, 4));
+        //alert(JSON.stringify(data, null, 4));
 
-        var name = $("input[name=name]").val();
-        var description = $("input[name=description]").val();
-        var prep_time = $("input[name=prep_time]").val();
-        var cook_time = $("input[name=cook_time]").val();
-        var ingredients = JSON.stringify(data);
+        //var name = $("input[name=name]").val();
+        //var description = $("input[name=description]").val();
+        //var prep_time = $("input[name=prep_time]").val();
+        //var cook_time = $("input[name=cook_time]").val();
+        //var ingredients = JSON.stringify(dataIngredients);
+        //var picture = $('#recipeInputPicture')[0].files[0];
 
+        var formData = new FormData();
+        formData.append('name', $("input[name=name]").val());
+        formData.append('description', $("input[name=description]").val());
+        formData.append('prep_time', $("input[name=prep_time]").val());
+        formData.append('cook_time', $("input[name=cook_time]").val());
+        formData.append('ingredients', JSON.stringify(dataIngredients));
+        formData.append('picture', $('#recipeInputPicture')[0].files[0]);
+        
         $.ajax({
             type: 'POST',
             url: "{{ route('recipes.store') }}",
-            data: {
-                name: name,
-                description: description,
-                prep_time: prep_time,
-                cook_time: cook_time,
-                ingredients: ingredients
-            },
+            contentType: false,
+            processData: false,
+            data: formData,
             success: function(data) {
                 alert(data.success);
             }
