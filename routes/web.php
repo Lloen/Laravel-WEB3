@@ -19,8 +19,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/about', function () {return view('about');});
 
-Route::get('/recipes/delete/{id}', 'RecipeController@delete')->name('recipes.delete');
-Route::resource('recipes', 'RecipeController');
+//Route::resource('recipes', 'RecipeController');
+
+Route::get('recipes', 'RecipeController@index')->name('recipes.index');
+Route::get('/recipes/create', 'RecipeController@create')->name('recipes.create')->middleware('auth');
+Route::get('/recipes/{recipe}/edit', 'RecipeController@edit')->name('recipes.edit')->middleware('auth');
+Route::get('/recipes/{recipe}', 'RecipeController@show')->name('recipes.show')->middleware('auth');
+Route::get('/recipes/delete/{id}', 'RecipeController@delete')->name('recipes.delete')->middleware('auth');
+Route::post('/recipes', 'RecipeController@store')->name('recipes.store')->middleware('auth');
+Route::patch('/recipes/{recipe}', 'RecipeController@update')->name('recipes.update')->middleware('auth');
+Route::delete('/recipes/{recipe}', 'RecipeController@destroy')->name('recipes.destroy')->middleware('auth');
 
 Route::get('/profile/{id}', 'UserController@show')->name('users.show');
 Route::get('/profile/{id}/edit', 'UserController@edit')->name('users.edit');

@@ -31,13 +31,9 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        if (Auth::check()) {
-            $ingredients = Ingredient::select('id', 'name')->orderBy('name', 'ASC')->get();
+        $ingredients = Ingredient::select('id', 'name')->orderBy('name', 'ASC')->get();
 
-            return view('recipes.create', compact('ingredients'));
-        } else {
-            abort(403, 'Unauthorized action.');
-        }
+        return view('recipes.create', compact('ingredients'));
     }
 
     /**
@@ -48,51 +44,47 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check()) {
-            $request->validate([
-                'name' => 'required|max:35',
-                'description' => 'required|max:255',
-                'prep_time' => 'required',
-                'cook_time' => 'required',
-                'ingredients' => 'required',
-                'picture' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
-            ]);
+        $request->validate([
+            'name' => 'required|max:35',
+            'description' => 'required|max:255',
+            'prep_time' => 'required',
+            'cook_time' => 'required',
+            'ingredients' => 'required',
+            'picture' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
+        ]);
 
-            $recipe = new Recipe([
-                'name' => $request->get('name'),
-                'description' => $request->get('description'),
-                'prep_time' => $request->get('prep_time'),
-                'cook_time' => $request->get('cook_time'),
-                'votes' => "0",
-                'created_by' => Auth::user()->id
-            ]);
+        $recipe = new Recipe([
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+            'prep_time' => $request->get('prep_time'),
+            'cook_time' => $request->get('cook_time'),
+            'votes' => "0",
+            'created_by' => Auth::user()->id
+        ]);
 
-            if(request()->has('picture')) {
-                $picture = $request->file('picture');
-                $pictureName = time().'.'.request()->picture->getClientOriginalExtension();
-                $img = Image::make($picture)->resize(715, 479);
-                $img->save(storage_path('app/public/images/recipes/' . $pictureName));
-    
-                $recipe->picture = $pictureName;
-            }
+        if(request()->has('picture')) {
+            $picture = $request->file('picture');
+            $pictureName = time().'.'.request()->picture->getClientOriginalExtension();
+            $img = Image::make($picture)->resize(715, 479);
+            $img->save(storage_path('app/public/images/recipes/' . $pictureName));
 
-            $recipe->save();
-           
-            foreach(json_decode($request->get('ingredients')) as $ingredient) {
-                $foodIngredient = new FoodsIngredient([
-                    'fk_ingredient' => $ingredient->id,
-                    'fk_recipe' => $recipe->id,
-                    'amount' => $ingredient->amount,
-                    'unit' => $ingredient->unit
-                ]);
-
-                $foodIngredient->save();
-            }
-
-            return redirect('/recipes')->with('success', 'Recipe has been added!');
-        } else {
-            abort(403, 'Unauthorized action.');
+            $recipe->picture = $pictureName;
         }
+
+        $recipe->save();
+       
+        foreach(json_decode($request->get('ingredients')) as $ingredient) {
+            $foodIngredient = new FoodsIngredient([
+                'fk_ingredient' => $ingredient->id,
+                'fk_recipe' => $recipe->id,
+                'amount' => $ingredient->amount,
+                'unit' => $ingredient->unit
+            ]);
+
+            $foodIngredient->save();
+        }
+
+        return redirect('/recipes')->with('success', 'Recipe has been added!');
     }
 
     /**
@@ -103,14 +95,10 @@ class RecipeController extends Controller
      */
     public function show($id)
     {
-        if (Auth::check()) {
-            $recipeData = FoodsIngredient::with(['recipe','ingredient'])->where('fk_recipe', $id)->get();
-            $recipe = Recipe::find($id);
+        $recipeData = FoodsIngredient::with(['recipe','ingredient'])->where('fk_recipe', $id)->get();
+        $recipe = Recipe::find($id);
 
-            return view('recipes.show', compact('recipeData', 'recipe'));
-        } else {
-            abort(403, 'Unauthorized action.');
-        }
+        return view('recipes.show', compact('recipeData', 'recipe'));
     }
 
     /**
@@ -121,13 +109,9 @@ class RecipeController extends Controller
      */
     public function edit($id)
     {
-        if (Auth::check()) {
-            $recipe = Recipe::find($id);
+        $recipe = Recipe::find($id);
 
-            return view('recipes.edit', compact('recipe'));
-        } else {
-            abort(403, 'Unauthorized action.');
-        }
+        return view('recipes.edit', compact('recipe'));
     }
 
     /**
@@ -139,30 +123,26 @@ class RecipeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Auth::check()) {
-            $request->validate([
-                'name' => 'required|max35',
-                'description' => 'required|max255',
-                'prep_time' => 'required',
-                'cook_time' => 'required',
-                'picture' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
-            ]);
+        $request->validate([
+            'name' => 'required|max35',
+            'description' => 'required|max255',
+            'prep_time' => 'required',
+            'cook_time' => 'required',
+            'picture' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
+        ]);
 
-            $recipe = Recipe::find($id);
+        $recipe = Recipe::find($id);
 
-            $this->authorize('update', $recipe);
+        $this->authorize('update', $recipe);
 
-            $recipe->name = $request->name;
-            $recipe->description = $request->description;
-            $recipe->prep_time = $request->prep_time;
-            $recipe->cook_time = $request->cook_time;
+        $recipe->name = $request->name;
+        $recipe->description = $request->description;
+        $recipe->prep_time = $request->prep_time;
+        $recipe->cook_time = $request->cook_time;
 
-            $recipe->save();
+        $recipe->save();
 
-            return redirect('/recipes')->with('success', 'Recipe has been updated!');
-        } else {
-            abort(403, 'Unauthorized action.');
-        }
+        return redirect('/recipes')->with('success', 'Recipe has been updated!');
     }
 
     /**
@@ -173,14 +153,10 @@ class RecipeController extends Controller
      */
     public function delete($id)
     {
-        if (Auth::check()) {
-            $recipe = Recipe::find($id);
-            $this->authorize('delete', $recipe);
+        $recipe = Recipe::find($id);
+        $this->authorize('delete', $recipe);
 
-            return view('recipes.delete', compact('recipe'));
-        } else {
-            abort(403, 'Unauthorized action.');
-        }
+        return view('recipes.delete', compact('recipe'));
     }
 
     /**
@@ -191,13 +167,9 @@ class RecipeController extends Controller
      */
     public function destroy($id)
     {
-        if (Auth::check()) {
-            $recipe = Recipe::find($id);
-            $recipe->delete();
+        $recipe = Recipe::find($id);
+        $recipe->delete();
 
-            return redirect('/recipes')->with('success', 'Recipe has been deleted!');
-        } else {
-            abort(403, 'Unauthorized action.');
-        }
+        return redirect('/recipes')->with('success', 'Recipe has been deleted!');
     }
 }
