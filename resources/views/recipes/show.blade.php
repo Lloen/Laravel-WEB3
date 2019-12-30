@@ -11,19 +11,23 @@
                     </div>
                     <div class="d-flex flex-column">
                         <h1 class="card-title">
-                            {{$recipe->name}}
+                            {{ $recipe->name }}
                         </h1>
                         <div class="description">
-                            <p>{{$recipe->description}} </p>
+                            <p>
+                                {{ $recipe->description }}
+                            </p>
                         </div>
                         <div class="mt-auto">
                             <div class="votes">
-                                <p><i class="far fa-heart mr-2"></i> {{$recipe->votes}} </p>
+                                <p>
+                                    <i class="far fa-heart mr-2"></i> {{ $recipe->votes }}
+                                </p>
                             </div>
                             <div class="created_by">
                                 <p>
                                     <i class="fas fa-user mr-2"></i>
-                                    <a href="{{ url('/profile/'.$recipe->user->id) }}">{{$recipe->user->name}}</a>
+                                    <a href="{{ url('/profile/'.$recipe->user->id) }}">{{ $recipe->user->name }}</a>
                                 </p>
                             </div>
                         </div>
@@ -34,17 +38,28 @@
         <div class="card-body">
             <div class="d-flex flex-row mb-3">
                 <i class="far fa-clock fa-3x p-2"></i>
-                <div class="prep_time p-2">
+                <div class="prep_time p-2 ml-2">
                     <p>Prep:</br>
-                        {{$recipe->prep_time}}</p>
+                        {{ $recipe->prep_time }}</p>
                 </div>
                 <div class="cooking_time p-2">
                     <p>Cook: </br>
-                        {{$recipe->cook_time}}</p>
+                        {{ $recipe->cook_time }}</p>
                 </div>
             </div>
             <div class="d-flex flex-row mb-3">
                 <i class="fas fa-utensils fa-3x p-2"></i>
+                <div>
+                    <ul>
+                        @foreach ($recipeData as $ingredient)
+                        <li>
+                            {{ $ingredient->amount }}
+                            {{ $ingredient->unit }} of
+                            <a href="https://en.wikipedia.org/wiki/{{ $ingredient->ingredient->wikipedia_id }}" target="_blank"> {{ $ingredient->ingredient->name }}</a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
             <div class="d-flex flex-row mb-3">
                 <i class="fas fa-list-ol fa-3x p-2"></i>

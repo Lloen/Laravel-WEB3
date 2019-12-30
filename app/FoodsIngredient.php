@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FoodIngredient extends Model
+class FoodsIngredient extends Model
 {
     public $timestamps = false;
 
@@ -17,11 +17,11 @@ class FoodIngredient extends Model
 
     public function recipe()
     {
-        return $this->belongsTo('App\Recipe');
+        return $this->belongsTo('App\Recipe', 'fk_recipe');
     }
 
     public function ingredient()
     {
-        return $this->belongsTo('App\Ingredient');
+        return $this->belongsTo('App\Ingredient', 'fk_ingredient');
     }
 }

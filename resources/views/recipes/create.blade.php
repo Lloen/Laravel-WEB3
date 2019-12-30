@@ -41,7 +41,7 @@
                                     <th scope="col" style="width: 5%"></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="ingredientData">
                                 <tr>
                                     <td>
                                         <select class="selectpicker show-tick w-100" data-live-search="true" title="Add an ingredient..">
@@ -51,18 +51,18 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="number" min="0" step="1" class="form-control" id="ingredientAmount1" name="ingredient_amount_1">
+                                        <input type="number" min="0" step="0.01" class="form-control" id="ingredientAmount" name="ingredient_amount">
                                     </td>
                                     <td>
-                                        <input type="number" min="0" step="1" class="form-control" id="ingredientVatriable1" name="ingredient_variable_1">
+                                        <input class="form-control" id="ingredientUnit" name="ingredient_unit">
                                     </td>
                                 </tr>
                             </tbody>
-                            <!-- <tfoot>
+                            <tfoot>
                                 <td>
                                     <button id="btnNewIngredient" type="button" class="btn btn-outline-secondary">New Ingredient</button>
                                 </td>
-                            </tfoot> -->
+                            </tfoot>
                         </table>
                     </div>
 
@@ -89,7 +89,7 @@
 
 <script>
     $('#btnNewIngredient').on('click', function(e) {
-        $('.table').find('tbody:last').append('<tr><td><select class="selectpicker show-tick w-100" data-live-search="true" title="Add an ingredient..">@foreach ($ingredients as $ingredient) <option>{{$ingredient->name}}</option>@endforeach </select></td><td><input type="number" min="0" step="1" class="form-control" id="ingredientAmount1" name="ingredient_amount_1"></td><td><input type="number" min="0" step="1" class="form-control" id="ingredientVatriable1" name="ingredient_variable_1"></td><td><button id="btnDeleteIngredient" type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button></td></tr>');
+        $('.table').find('tbody:last').append('<tr><td><select class="selectpicker show-tick w-100" data-live-search="true" title="Add an ingredient..">@foreach ($ingredients as $ingredient) <option value="{{ $ingredient->id }}">{{$ingredient->name}}</option>@endforeach </select></td><td><input type="number" min="0" step="0.01" class="form-control" id="ingredientAmount1" name="ingredient_amount_1"></td><td><input class="form-control" id="ingredientUnit" name="ingredient_variable_1"></td><td><button id="btnDeleteIngredient" type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button></td></tr>');
         $('select').selectpicker();
     });
 
@@ -98,7 +98,7 @@
     });
 
 
-    //Post
+    //Post form via AJAX
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -107,11 +107,13 @@
 
     $("#btnSubmit").click(function(e) {
         // Go thourgh the table and put each cell in a value for JSON
-        var data = $('.table tr:gt(0)').map(function() {
+        var rows = ($('.table tr').length);
+        rows =- 1;
+        var data = $('.table tr:gt(0):lt('+rows+')').map(function() {
             return {
                 id: $(this.cells[0]).find("select").val(),
                 amount: $(this.cells[1]).find("input[type='number']").val(),
-                unit: $(this.cells[2]).find("input[type='number']").val()
+                unit: $(this.cells[2]).find("input").val()
             };
         }).get();
 

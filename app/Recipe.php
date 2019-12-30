@@ -17,7 +17,7 @@ class Recipe extends Model
 
     public function foodIngredient()
     {
-        return $this->hasMany('App\FoodIngredient');
+        return $this->hasMany('App\FoodsIngredient');
     }
 
     public function user()

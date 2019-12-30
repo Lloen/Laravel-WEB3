@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\FoodIngredient;
+use App\FoodsIngredient;
 use App\Ingredient;
 use Illuminate\Http\Request;
 use App\Recipe;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RecipeController extends Controller
 {
@@ -67,7 +68,7 @@ class RecipeController extends Controller
             $recipe->save();
            
             foreach(json_decode($request->get('ingredients')) as $ingredient) {
-                $foodIngredient = new FoodIngredient([
+                $foodIngredient = new FoodsIngredient([
                     'fk_ingredient' => $ingredient->id,
                     'fk_recipe' => $recipe->id,
                     'amount' => $ingredient->amount,
@@ -92,9 +93,10 @@ class RecipeController extends Controller
     public function show($id)
     {
         if (Auth::check()) {
+            $recipeData = FoodsIngredient::with(['recipe','ingredient'])->where('fk_recipe', $id)->get();
             $recipe = Recipe::find($id);
 
-            return view('recipes.show', array('recipe' => $recipe));
+            return view('recipes.show', compact('recipeData', 'recipe'));
         } else {
             abort(403, 'Unauthorized action.');
         }

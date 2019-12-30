@@ -9,6 +9,6 @@ class Ingredient extends Model
     //
     public function foodIngredients()
     {
-        return $this->hasMany('App\FoodIngredient');
+        return $this->hasMany('App\FoodsIngredient');
     }
 }
