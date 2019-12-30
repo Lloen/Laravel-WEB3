@@ -31,7 +31,7 @@
         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
             <div class="card-body">
                 <div class="d-flex flex-row">
-                    <div class="col-sm">
+                    <div>
                         <img class="rounded float-left" src="/storage/images/users/{{ $user->avatar }}">
                     </div>
                     <div class="col-sm">
@@ -58,17 +58,19 @@
                     @foreach ($recipes as $recipe)
                     <div class="col-sm-3">
                         <div class="card h-100">
-                            <img src="https://www.cimec.co.za/wp-content/uploads/2018/07/4-Unique-Placeholder-Image-Services-for-Designers.png" class="card-img-top" alt="...">
+                        <img src="storage\images\recipes\{{ $recipe->picture }}" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $recipe->name }}</h5>
                                 <p class="card-text">{{ $recipe->description }}</p>
                             </div>
                             <div class="card-footer text-muted">
-                                <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-primary">View</a>
-                                @if ($recipe->created_by == Auth::user()->id)
-                                <a href="{{ route('recipes.edit', $recipe->id) }}" class="btn btn-dark btnEditRecipe">Edit</a>
-                                <a href="{{ route('recipes.delete', $recipe->id) }}" class="btn btn-danger btnDeleteRecipe">Delete</a>
-                                @endif
+                                <div class="d-flex justify-content-around">
+                                    <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-primary w-100">View</a>
+                                    @if ($recipe->created_by == Auth::user()->id)
+                                    <a href="{{ route('recipes.edit', $recipe->id) }}" class="btn btn-dark btnEditRecipe w-100">Edit</a>
+                                    <a href="{{ route('recipes.delete', $recipe->id) }}" class="btn btn-danger btnDeleteRecipe w-100">Delete</a>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>

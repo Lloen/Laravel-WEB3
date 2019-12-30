@@ -17,7 +17,7 @@
 <!-- Styles -->
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('/css/app.css')  }}">
 
-<meta name="description" content="Web3 Laravel Project">
+<meta name="description" content="WEB3 Laravel Project">
 
 
 <!-- load bootstrap from a cdn -->

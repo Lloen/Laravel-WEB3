@@ -23,7 +23,8 @@
         About Us
     </div>
     <p>
-        A WEB3 project.
+        A WEB3 project about a page to upload recipes.</br>
+        <i class="fab fa-laravel"></i> <i class="fab fa-bootstrap"></i>
     </p>
 </div>
 

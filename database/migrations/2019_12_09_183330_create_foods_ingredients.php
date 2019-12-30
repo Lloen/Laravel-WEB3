@@ -17,6 +17,7 @@ class CreateFoodsIngredients extends Migration
             $table->unsignedBigInteger('fk_ingredient');
             $table->unsignedBigInteger('fk_recipe');
             $table->double('amount', 10, 2);
+            $table->string('unit');
         });
         
         

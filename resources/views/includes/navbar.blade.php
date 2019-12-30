@@ -44,11 +44,11 @@
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/profile/{{ Auth::user()->id }}">
-                            <div><i class="mr-1 fas fa-user"></i> Profile</div> 
+                            <div><i class="mr-1 fas fa-user"></i> Profile</div>
                         </a>
 
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                           <div><i class="mr-1 fas fa-sign-out-alt"></i> Logout</div> 
+                            <div><i class="mr-1 fas fa-sign-out-alt"></i> Logout</div>
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -73,3 +73,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    //On modal close, reload loading icon
+    $('#myModal').on('hidden.bs.modal', function() {
+        $('.modal').text('<div class="modal-content"><div class="modal-body"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div></div>');
+    });
+</script>

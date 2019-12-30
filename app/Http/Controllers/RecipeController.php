@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\FoodIngredient;
 use App\Ingredient;
 use Illuminate\Http\Request;
 use App\Recipe;
@@ -29,7 +30,7 @@ class RecipeController extends Controller
     public function create()
     {
         if (Auth::check()) {
-            $ingredients = Ingredient::select('name')->get();
+            $ingredients = Ingredient::select('id', 'name')->get();
 
             return view('recipes.create', compact('ingredients'));
         } else {
@@ -50,7 +51,8 @@ class RecipeController extends Controller
                 'name' => 'required',
                 'description' => 'required',
                 'prep_time' => 'required',
-                'cook_time' => 'required'
+                'cook_time' => 'required',
+                'ingredients' => 'required'
             ]);
 
             $recipe = new Recipe([
@@ -63,6 +65,17 @@ class RecipeController extends Controller
             ]);
 
             $recipe->save();
+           
+            foreach(json_decode($request->get('ingredients')) as $ingredient) {
+                $foodIngredient = new FoodIngredient([
+                    'fk_ingredient' => $ingredient->id,
+                    'fk_recipe' => $recipe->id,
+                    'amount' => $ingredient->amount,
+                    'unit' => $ingredient->unit
+                ]);
+
+                $foodIngredient->save();
+            }
 
             return redirect('/recipes')->with('success', 'Recipe has been added!');
         } else {
