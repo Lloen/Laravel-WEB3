@@ -10,7 +10,7 @@
 <div class="row">
     @foreach ($recipes as $recipe)
     <div class="col-sm-3 mb-4">
-        <div class="card h-100">
+        <div class="card h-100 shadow">
             @if (Auth::check())
             <img src="storage\images\recipes\{{ $recipe->picture }}" class="card-img-top" alt="...">
             @else
