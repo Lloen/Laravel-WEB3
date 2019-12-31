@@ -101,8 +101,9 @@ class RecipeController extends Controller
     public function edit($id)
     {
         $recipe = Recipe::find($id);
+        $ingredients = Ingredient::select('id', 'name')->orderBy('name', 'ASC')->get();
 
-        return view('recipes.edit', compact('recipe'));
+        return view('recipes.edit', compact('recipe', 'ingredients'));
     }
 
     /**
@@ -119,7 +120,7 @@ class RecipeController extends Controller
             'description' => 'required|max:255',
             'prep_time' => 'required',
             'cook_time' => 'required',
-            //  'picture' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
+            'picture' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
         ]);
 
         $recipe = Recipe::find($id);
@@ -130,10 +131,23 @@ class RecipeController extends Controller
         $recipe->description = $request->description;
         $recipe->prep_time = $request->prep_time;
         $recipe->cook_time = $request->cook_time;
+        
+        if(request()->has('picture')) {
+            $picture = $request->file('picture');
+            $pictureName = time().'.'.request()->picture->getClientOriginalExtension();
+            $img = Image::make($picture)->resize(715, 479);
+            $img->save(storage_path('app/public/images/recipes/' . $pictureName));
+
+            $recipe->picture = $pictureName;
+        }
+
+        foreach(json_decode($request->get('ingredients')) as $ingredient) {
+            $recipe->ingredients()->sync($ingredient->id, ['amount' => $ingredient->amount, 'unit' => $ingredient->unit]);
+        }
 
         $recipe->save();
 
-        return redirect('/profile/'.$recipe->created_by)->with('success', 'Recipe has been updated!');
+        return route('recipes.show', ['recipe' => $recipe]);
     }
 
     /**

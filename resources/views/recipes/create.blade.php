@@ -6,17 +6,12 @@
         </button>
     </div>
     <div class="modal-body">
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div><br />
-        @endif
 
         <div class="flex-center position-ref full-height">
+
+            <div id="loadingIndicator" class="spinner-border" role="status" style="display:none; width: 3rem; height: 3rem;">
+                <span class="sr-only">Loading...</span>
+            </div>
 
             <div class="content">
                 <form id="fromCreateRecipe">
@@ -31,10 +26,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="avatar">Picture</label>
+                        <label for="picture">Picture</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="recipeInputPicture">
-                            <label class="custom-file-label" for="customFileLang">Select Picture</label>
+                            <label class="custom-file-label" for="customFileLang" name="picture">Select Picture</label>
                         </div>
                     </div>
 
@@ -52,11 +47,12 @@
                             <tbody id="ingredientData">
                                 <tr>
                                     <td>
-                                        <select class="selectpicker show-tick" data-width="100%" data-live-search="true" title="Add an ingredient.." required>
+                                        <select class="selectpicker show-tick" data-width="100%" data-live-search="true" title="Add an ingredient.." data-style="btn-neutral" name="ingredient" required>
                                             @foreach ($ingredients as $ingredient)
                                             <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
                                             @endforeach
                                         </select>
+                                        <label for="ingredient" generated="true" class="error"></label>
                                     </td>
                                     <td>
                                         <input type="number" min="0" step="0.01" class="form-control" id="ingredientAmount" name="ingredient_amount" required>
@@ -96,11 +92,12 @@
 </div>
 
 <script>
+    // On New Ingredient button click, create a new row of ingredient on table
     $('#btnNewIngredient').on('click', function(e) {
-        $('.table').find('tbody:last').append('<tr><td><select class="selectpicker" data-width="100%" show-tick data-live-search="true" title="Add an ingredient..">@foreach ($ingredients as $ingredient) <option value="{{ $ingredient->id }}">{{$ingredient->name}}</option>@endforeach </select></td><td><input type="number" min="0" step="0.01" class="form-control" id="ingredientAmount1" name="ingredient_amount_1"></td><td><input class="form-control" id="ingredientUnit" name="ingredient_variable_1"></td><td><button id="btnDeleteIngredient" type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button></td></tr>');
+        $('.table').find('tbody:last').append('<tr><td><select class="selectpicker" data-width="100%" show-tick data-live-search="true" title="Add an ingredient.." data-style="btn-neutral" required>@foreach ($ingredients as $ingredient) <option value="{{ $ingredient->id }}">{{$ingredient->name}}</option>@endforeach </select></td><td><input type="number" min="0" step="0.01" class="form-control" id="ingredientAmount" name="ingredient_amount" required></td><td><input class="form-control" id="ingredientUnit" name="ingredient_unit" required></td><td><button id="btnDeleteIngredient" type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button></td></tr>');
         $('select').selectpicker();
     });
-
+    // On Delete Ingredient button remove the row
     $(document).on('click', '#btnDeleteIngredient', function(e) {
         $(this).closest("tr").remove();
     });
@@ -132,10 +129,9 @@
             formData.append('prep_time', $("input[name=prep_time]").val());
             formData.append('cook_time', $("input[name=cook_time]").val());
             formData.append('ingredients', JSON.stringify(dataIngredients));
-            console.log($('#recipeInputPicture')[0].files[0]);
-            if($('#recipeInputPicture')[0].files[0] != undefined )
+            if ($('#recipeInputPicture')[0].files[0] != undefined)
                 formData.append('picture', $('#recipeInputPicture')[0].files[0]);
-                
+
             $.ajax({
                 type: 'POST',
                 url: "{{ route('recipes.store') }}",
@@ -147,5 +143,13 @@
                 }
             });
         }
+    });
+
+    //Show and hide modal loader on ajax call
+    $(document).ajaxSend(function(e) {
+        $('#loadingIndicator').show();
+    });
+    $(document).ajaxComplete(function(e) {
+        $('#loadingIndicator').hide();
     });
 </script>

@@ -4,12 +4,12 @@
 <div class="d-flex justify-content-center">
     <div class="card shadow w-100 ml-5 mr-5">
         <div class="card-header">
-            <div class="d-flex">
+            <div class="container mx-0 px-0">
                 <div class="row">
-                    <div class="col-sm">
+                    <div class="col">
                         <img class="rounded float-left" src="/storage/images/recipes/{{ $recipe->picture }}">
                     </div>
-                    <div class="d-flex flex-column">
+                    <div class="col">
                         <h1 class="card-title">
                             {{ $recipe->name }}
                         </h1>
@@ -18,7 +18,7 @@
                                 {{ $recipe->description }}
                             </p>
                         </div>
-                        <div class="mt-auto">
+                        <div class="d-flex flex-column justify-content-end">
                             <div class="votes">
                                 <p>
                                     <i class="far fa-heart mr-2"></i> {{ $recipe->votes }}

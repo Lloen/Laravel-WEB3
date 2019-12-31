@@ -45,11 +45,23 @@
         margin: 0;
     }
 
+    /* JQuery Validate error styles*/
     input.error {
         border: 1px solid red;
     }
-
     label.error {
         color: red;
+    }
+
+    .btn-neutral {
+        color: #fff;
+        background-color: #ffffff;
+        border: 1px solid #ced4da;
+    }
+
+    #loading-indicator {
+        position: absolute;
+        left: 10px;
+        top: 10px;
     }
 </style>

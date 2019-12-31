@@ -66,7 +66,7 @@
                             <div class="card-footer text-muted">
                                 <div class="d-flex justify-content-around">
                                     <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-primary w-100">View</a>
-                                    @if ($recipe->created_by == Auth::user()->id)
+                                    @if (Auth::user()->can('update', $recipe))
                                     <a href="{{ route('recipes.edit', $recipe->id) }}" class="btn btn-dark btnEditRecipe w-100">Edit</a>
                                     <a href="{{ route('recipes.delete', $recipe->id) }}" class="btn btn-danger btnDeleteRecipe w-100">Delete</a>
                                     @endif
@@ -92,7 +92,9 @@
             e.preventDefault();
             var link = this.href;
             $('.modal').modal('toggle');
-            $('.modal').load(link);
+            $('.modal').load(link, function() {
+                $('select').selectpicker();
+            })
         });
         $('.btnEditUser').on('click', function(e) {
             e.preventDefault();
