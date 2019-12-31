@@ -32,7 +32,10 @@
 
                     <div class="form-group">
                         <label for="avatar">Picture</label>
-                        <input type="file" class="form-control" id="recipeInputPicture" name="picture">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="recipeInputPicture">
+                            <label class="custom-file-label" for="customFileLang">Select Picture</label>
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -129,8 +132,10 @@
             formData.append('prep_time', $("input[name=prep_time]").val());
             formData.append('cook_time', $("input[name=cook_time]").val());
             formData.append('ingredients', JSON.stringify(dataIngredients));
-            formData.append('picture', $('#recipeInputPicture')[0].files[0]);
-
+            console.log($('#recipeInputPicture')[0].files[0]);
+            if($('#recipeInputPicture')[0].files[0] != undefined )
+                formData.append('picture', $('#recipeInputPicture')[0].files[0]);
+                
             $.ajax({
                 type: 'POST',
                 url: "{{ route('recipes.store') }}",

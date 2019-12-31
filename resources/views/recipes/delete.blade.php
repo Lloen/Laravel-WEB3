@@ -9,11 +9,11 @@
         <p>Are ou sure you want to delete {{$recipe->name}}?</p>
     </div>
     <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
         <form action="{{ route('recipes.destroy', $recipe->id) }}" method="post">
             @csrf
             @method('DELETE')
             <button class="btn btn-danger" type="submit">Delete</button>
         </form>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
     </div>
 </div>

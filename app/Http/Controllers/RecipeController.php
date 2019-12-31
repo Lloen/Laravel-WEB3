@@ -74,8 +74,7 @@ class RecipeController extends Controller
         $recipe->save();
        
         foreach(json_decode($request->get('ingredients')) as $ingredient) {
-            $recipe->ingredients()->attach($ingredient->id, ['amount' => $ingredient->amount, 
-                                                                'unit' => $ingredient->unit]);
+            $recipe->ingredients()->attach($ingredient->id, ['amount' => $ingredient->amount, 'unit' => $ingredient->unit]);
         }
 
         return route('recipes.show', ['recipe' => $recipe]);
@@ -149,7 +148,7 @@ class RecipeController extends Controller
         $recipe->ingredients()->detach();
         $this->authorize('delete', $recipe);
 
-        return redirect('/profile/'.$recipe->created_by)->with('success', 'Recipe has been deleted!');
+        return view('recipes.delete', compact('recipe'));
     }
 
     /**
@@ -163,6 +162,6 @@ class RecipeController extends Controller
         $recipe = Recipe::find($id);
         $recipe->delete();
 
-        return redirect('/recipes')->with('success', 'Recipe has been deleted!');
+        return redirect('/profile/'.$recipe->created_by)->with('success', 'Recipe has been deleted!');
     }
 }

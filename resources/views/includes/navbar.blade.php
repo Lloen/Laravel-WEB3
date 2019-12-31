@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}" >
             <img src="{{ URL::asset('/images/logo-512x512.png') }}" width="30" height="30" class="d-inline-block align-top" alt="">
