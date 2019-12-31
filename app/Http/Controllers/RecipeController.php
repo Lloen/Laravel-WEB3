@@ -74,17 +74,11 @@ class RecipeController extends Controller
         $recipe->save();
        
         foreach(json_decode($request->get('ingredients')) as $ingredient) {
-            $foodIngredient = new FoodsIngredient([
-                'fk_ingredient' => $ingredient->id,
-                'fk_recipe' => $recipe->id,
-                'amount' => $ingredient->amount,
-                'unit' => $ingredient->unit
-            ]);
-
-            $foodIngredient->save();
+            $recipe->ingredients()->attach($ingredient->id, ['amount' => $ingredient->amount, 
+                                                                'unit' => $ingredient->unit]);
         }
 
-        return redirect('/recipes')->with('success', 'Recipe has been added!');
+        return route('recipes.show', ['recipe' => $recipe]);
     }
 
     /**
@@ -95,10 +89,8 @@ class RecipeController extends Controller
      */
     public function show($id)
     {
-        $recipeData = FoodsIngredient::with(['recipe','ingredient'])->where('fk_recipe', $id)->get();
         $recipe = Recipe::find($id);
-
-        return view('recipes.show', compact('recipeData', 'recipe'));
+        return view('recipes.show', compact('recipe'));
     }
 
     /**
@@ -124,11 +116,11 @@ class RecipeController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|max35',
-            'description' => 'required|max255',
+            'name' => 'required|max:35',
+            'description' => 'required|max:255',
             'prep_time' => 'required',
             'cook_time' => 'required',
-            'picture' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
+            //  'picture' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
         ]);
 
         $recipe = Recipe::find($id);
@@ -142,7 +134,7 @@ class RecipeController extends Controller
 
         $recipe->save();
 
-        return redirect('/recipes')->with('success', 'Recipe has been updated!');
+        return redirect('/profile/'.$recipe->created_by)->with('success', 'Recipe has been updated!');
     }
 
     /**
@@ -154,9 +146,10 @@ class RecipeController extends Controller
     public function delete($id)
     {
         $recipe = Recipe::find($id);
+        $recipe->ingredients()->detach();
         $this->authorize('delete', $recipe);
 
-        return view('recipes.delete', compact('recipe'));
+        return redirect('/profile/'.$recipe->created_by)->with('success', 'Recipe has been deleted!');
     }
 
     /**

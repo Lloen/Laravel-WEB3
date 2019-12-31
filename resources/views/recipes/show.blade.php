@@ -51,10 +51,10 @@
                 <i class="fas fa-utensils fa-3x p-2"></i>
                 <div>
                     <ul>
-                        @foreach ($recipeData as $ingredient)
+                        @foreach ($recipe->ingredients() as $ingredient)
                         <li>
-                            {{ $ingredient->amount }}
-                            {{ $ingredient->unit }} of
+                            {{ $ingredient->pivot->amount }}
+                            {{ $ingredient->pivot->unit }} of
                             <a href="https://en.wikipedia.org/wiki/{{ $ingredient->ingredient->wikipedia_id }}" target="_blank"> {{ $ingredient->ingredient->name }}</a>
                         </li>
                         @endforeach

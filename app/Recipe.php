@@ -25,4 +25,9 @@ class Recipe extends Model
     {
         return $this->belongsTo('App\User', 'created_by');
     }
+
+    public function ingredients()
+    {
+        return $this->belongsToMany('App\Ingredient')->withPivot('ingredient_id', 'amount', 'unit');
+    }
 }

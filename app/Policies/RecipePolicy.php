@@ -54,7 +54,7 @@ class RecipePolicy
      */
     public function update(User $user, Recipe $recipe)
     {
-        return $user->id === $recipe->user_id;
+        return $user->id === $recipe->created_by;
     }
 
     /**
@@ -66,7 +66,7 @@ class RecipePolicy
      */
     public function delete(User $user, Recipe $recipe)
     {
-        return $user->id === $recipe->user_id;
+        return $user->id === $recipe->created_by;
     }
 
     /**

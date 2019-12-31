@@ -123,15 +123,6 @@
                 };
             }).get();
 
-            //alert(JSON.stringify(data, null, 4));
-
-            //var name = $("input[name=name]").val();
-            //var description = $("input[name=description]").val();
-            //var prep_time = $("input[name=prep_time]").val();
-            //var cook_time = $("input[name=cook_time]").val();
-            //var ingredients = JSON.stringify(dataIngredients);
-            //var picture = $('#recipeInputPicture')[0].files[0];
-
             var formData = new FormData();
             formData.append('name', $("input[name=name]").val());
             formData.append('description', $("input[name=description]").val());
@@ -146,8 +137,8 @@
                 contentType: false,
                 processData: false,
                 data: formData,
-                success: function(data) {
-                    alert(data.success);
+                success: function(response) {
+                    window.location.replace(response);
                 }
             });
         }
