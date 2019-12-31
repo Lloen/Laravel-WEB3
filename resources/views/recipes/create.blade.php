@@ -19,15 +19,15 @@
         <div class="flex-center position-ref full-height">
 
             <div class="content">
-                <form>
+                <form id="fromCreateRecipe">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input class="form-control" id="recipeInputName" name="name" placeholder="Your recipe name" maxlength="35">
+                        <input class="form-control" id="recipeInputName" name="name" placeholder="Your recipe name" maxlength="35" required>
                     </div>
 
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <input class="form-control" id="recipeInputDescription" name="description" rows="3" placeholder="A simple description">
+                        <input class="form-control" id="recipeInputDescription" name="description" rows="3" placeholder="A simple description" required>
                     </div>
 
                     <div class="form-group">
@@ -49,17 +49,17 @@
                             <tbody id="ingredientData">
                                 <tr>
                                     <td>
-                                        <select class="selectpicker show-tick" data-width="100%" data-live-search="true" title="Add an ingredient..">
+                                        <select class="selectpicker show-tick" data-width="100%" data-live-search="true" title="Add an ingredient.." required>
                                             @foreach ($ingredients as $ingredient)
-                                            <option value="{{ $ingredient->id }}" >{{ $ingredient->name }}</option>
+                                            <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
                                             @endforeach
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="number" min="0" step="0.01" class="form-control" id="ingredientAmount" name="ingredient_amount">
+                                        <input type="number" min="0" step="0.01" class="form-control" id="ingredientAmount" name="ingredient_amount" required>
                                     </td>
                                     <td>
-                                        <input class="form-control" id="ingredientUnit" name="ingredient_unit">
+                                        <input class="form-control" id="ingredientUnit" name="ingredient_unit" required>
                                     </td>
                                 </tr>
                             </tbody>
@@ -74,11 +74,11 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="prep_time">Prep time (Minutes)</label>
-                            <input type="number" min="0" step="1" class="form-control" id="recipeInputPrepTime" name="prep_time">
+                            <input type="number" min="0" step="1" class="form-control" id="recipeInputPrepTime" name="prep_time" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="cook_time">Cook time (Minutes)</label>
-                            <input type="number" min="0" step="1" class="form-control" id="recipeInputCookTime" name="cook_time">
+                            <input type="number" min="0" step="1" class="form-control" id="recipeInputCookTime" name="cook_time" required>
                         </div>
                     </div>
 
@@ -111,43 +111,45 @@
     });
 
     $("#btnSubmit").click(function(e) {
-        // Go thourgh the table and put each cell in a value for JSON
-        var rows = ($('.table tr').length);
-        rows =- 1;
-        var dataIngredients = $('.table tr:gt(0):lt('+rows+')').map(function() {
-            return {
-                id: $(this.cells[0]).find("select").val(),
-                amount: $(this.cells[1]).find("input[type='number']").val(),
-                unit: $(this.cells[2]).find("input").val()
-            };
-        }).get();
+        if ($("#fromCreateRecipe").valid()) {
+            // Go thourgh the table and put each cell in a value for JSON
+            var rows = ($('.table tr').length);
+            rows = -1;
+            var dataIngredients = $('.table tr:gt(0):lt(' + rows + ')').map(function() {
+                return {
+                    id: $(this.cells[0]).find("select").val(),
+                    amount: $(this.cells[1]).find("input[type='number']").val(),
+                    unit: $(this.cells[2]).find("input").val()
+                };
+            }).get();
 
-        //alert(JSON.stringify(data, null, 4));
+            //alert(JSON.stringify(data, null, 4));
 
-        //var name = $("input[name=name]").val();
-        //var description = $("input[name=description]").val();
-        //var prep_time = $("input[name=prep_time]").val();
-        //var cook_time = $("input[name=cook_time]").val();
-        //var ingredients = JSON.stringify(dataIngredients);
-        //var picture = $('#recipeInputPicture')[0].files[0];
+            //var name = $("input[name=name]").val();
+            //var description = $("input[name=description]").val();
+            //var prep_time = $("input[name=prep_time]").val();
+            //var cook_time = $("input[name=cook_time]").val();
+            //var ingredients = JSON.stringify(dataIngredients);
+            //var picture = $('#recipeInputPicture')[0].files[0];
 
-        var formData = new FormData();
-        formData.append('name', $("input[name=name]").val());
-        formData.append('description', $("input[name=description]").val());
-        formData.append('prep_time', $("input[name=prep_time]").val());
-        formData.append('cook_time', $("input[name=cook_time]").val());
-        formData.append('ingredients', JSON.stringify(dataIngredients));
-        formData.append('picture', $('#recipeInputPicture')[0].files[0]);
-        
-        $.ajax({
-            type: 'POST',
-            url: "{{ route('recipes.store') }}",
-            contentType: false,
-            processData: false,
-            data: formData,
-            success: function(data) {
-                alert(data.success);
-            }
-        });
+            var formData = new FormData();
+            formData.append('name', $("input[name=name]").val());
+            formData.append('description', $("input[name=description]").val());
+            formData.append('prep_time', $("input[name=prep_time]").val());
+            formData.append('cook_time', $("input[name=cook_time]").val());
+            formData.append('ingredients', JSON.stringify(dataIngredients));
+            formData.append('picture', $('#recipeInputPicture')[0].files[0]);
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('recipes.store') }}",
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function(data) {
+                    alert(data.success);
+                }
+            });
+        }
     });
 </script>
