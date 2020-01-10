@@ -11,6 +11,7 @@ class ApiController extends Controller
         foreach($ingredients as $ingredient){
             $ingredient->picture = base64_encode($ingredient->picture);
         }
+        $ingredients->toJson(JSON_PRETTY_PRINT);
         return response($ingredients, 200);
     }
   
@@ -29,7 +30,17 @@ class ApiController extends Controller
     }
   
       public function getIngredient($id) {
-        // logic to get a student record goes here
+        if (Ingredient::where('id', $id)->exists()) {
+            $ingredient = Ingredient::find($id);
+            $ingredient->picture = base64_encode($ingredient->picture);
+            $ingredient->toJson(JSON_PRETTY_PRINT);
+            return response($ingredient, 200);
+        } 
+        else {
+            return response()->json([
+              "message" => "Ingredient not found"
+            ], 404);
+        }
     }
   
       public function updateIngredient(Request $request, $id) {
