@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ingredient extends Model
 {
+    protected $hidden = ['img'];
     protected $fillable = [
         'name',
         'description',

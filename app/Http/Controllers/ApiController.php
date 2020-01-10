@@ -7,8 +7,12 @@ use App\Ingredient;
 class ApiController extends Controller
 {
     public function getAllIngredients() {
-        // logic to get all students goes here
-      }
+        $ingredients = Ingredient::get();
+        foreach($ingredients as $ingredient){
+            $ingredient->picture = base64_encode($ingredient->picture);
+        }
+        return response($ingredients, 200);
+    }
   
     public function createIngredient(Request $request) {
         $ingredient = new Ingredient;
