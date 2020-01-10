@@ -14,7 +14,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request){
     return $request->user();
 });
+
+Route::get('ingredients', 'ApiController@getAllIngredients');
+Route::get('ingredients/{id}', 'ApiController@getIngredient');
+Route::post('ingredients', 'ApiController@createIngredient');
+Route::put('ingredients/{id}', 'ApiController@updateIngredient');
+Route::delete('ingredients/{id}','ApiController@deleteIngredient');
