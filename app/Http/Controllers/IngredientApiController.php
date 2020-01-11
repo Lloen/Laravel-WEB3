@@ -50,7 +50,6 @@ class IngredientApiController extends Controller
           $ingredient->wikipedia_id = is_null($request->wikipedia_id) ? $ingredient->wikipedia_id : $request->wikipedia_id;
           $ingredient->name_scientific = is_null($request->name_scientific) ? $ingredient->name_scientific : $request->name_scientific;
           $ingredient->group = is_null($request->group) ? $ingredient->group : $request->group;
-          $ingredient->updated_by = is_null($request->updated_by) ? $ingredient->updated_by : $request->updated_by;
           $ingredient->save();
   
           return response()->json(["message" => "Record updated successfully"], 200);

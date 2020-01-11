@@ -43,6 +43,7 @@
     </div>
 </div>
 
+
 <script>
 var id = '{{request()->route("ingredient")}}';
 

@@ -33,7 +33,7 @@
                 $('#myTable > tbody:last-child').append('<tr><th scope="row">' + data[index].id + '</th><td>' + data[index].name + 
                 '</td><td>' + '<a href="http://wikipedia.org/wiki/"'+ data[index].wikipedia_id + '>' + data[index].name + '</a>' + 
                 '</td><td>' + data[index].name_scientific + '</td><td>' + data[index].group + '</td> <td><a href="/ingredients/'+ data[index].id +'" id="btnView" type="button" class="btn btn-primary">Info</a></td>' + 
-                '<td><button type="button" class="btn btn-dark" id="btnEdit" >Edit</button>' + 
+                '<td><button type="button" class="btn btn-dark" id="btnEditIngredient" >Edit</button>' + 
                 '</td><td><button type="button" class="btn btn-danger" id="btnDelete">Delete</button>' + '</td></tr>');
             })
         },
@@ -41,8 +41,7 @@
 
     $("body").on("click", "#btnDelete", function(){
 
-      var id = $(this).closest('tr').find('th:first');
-      id = id.text();
+      var id = $(this).closest('tr').find('th:first').text();
       $.ajax({
         url: '/api/ingredients/' + id,
         type: 'DELETE',
@@ -52,9 +51,15 @@
       });
     });
 
-    $("body").on("click", "#btnEdit", function(){
-      alert("Triggred by" + $(this).text() );
-    });
+    $('body').on('click', "#btnEditIngredient", function(e) {
+            var id = $(this).closest('tr').find('th:first').text();
+            e.preventDefault();
+            var link = "/ingredients/"+id+"/edit";
+            $('.modal').modal('toggle');
+            $('.modal').load(link, function() {
+              
+            })
+        });
 
 </script>
 @stop

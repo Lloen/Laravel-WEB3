@@ -1,0 +1,83 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Update your ingredient!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="flex-center position-ref full-height">
+            <div class="content">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input class="form-control" id="nameInput" name="name" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Description</label>
+                        <textarea class="form-control" id="descriptionInput" name="description" ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="avatar">Wikipedia link</label>
+                        <input class="form-control" id="wikipediaInput" name="wikipediaLink" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="avatar">Scientific name</label>
+                        <input class="form-control" id="scientificInput" name="scientificName" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="avatar">Group</label>
+                        <input class="form-control" id="groupInput" name="group" >
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+        <button id="btnSubmit" class="btn btn-success">Submit</button>
+    </div>
+</div>
+
+<script>
+    
+    $.ajax({
+        url: '/api/ingredients/{{$id}}',
+        type: 'GET',
+        success: function(data) {
+            $("#nameInput").val(data.name);
+            $("#descriptionInput").val(data.description);
+            $("#wikipediaInput").val(data.wikipedia_id).text();
+            $("#scientificInput").val(data.name_scientific);
+            $("#groupInput").val(data.group);
+        },
+    });
+
+
+    $('#btnSubmit').click(function() {
+        var formData = new FormData();
+        formData.append('name', $("input[name=name]").val());
+        formData.append('description', $("input[name=description]").val());
+        formData.append('wikipedia_id', $("input[name=wikipedia_id]").val());
+        formData.append('name_scientific', $("input[name=name_scientific]").val());
+        formData.append('group', $("input[name=group]").val());
+        // if ($('#recipeInputPicture')[0].files[0] != undefined)
+        //     formData.append('picture', $('#recipeInputPicture')[0].files[0]);
+
+        $.ajax({
+            url: '/api/ingredients/{{$id}}',
+            type: 'PUT',
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function(result) {
+                location.reload();
+            }
+        });
+    });
+
+</script>

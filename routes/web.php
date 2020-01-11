@@ -42,5 +42,9 @@ Route::get('ingredients', function (){
 Route::get('ingredients/{ingredient}', function (){
     return view('ingredients.show');
 })->name('ingredients.show')->middleware('auth');
+Route::get('ingredients/{ingredient}/edit', function (){
+    $id = request()->route('ingredient');
+    return view('ingredients.edit', compact('id'));
+})->name('ingredients.edit')->middleware('auth');
 
 Auth::routes();

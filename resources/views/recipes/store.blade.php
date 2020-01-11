@@ -45,11 +45,6 @@
                 margin:50px;
 
             }
-
-            .description{
-
-
-            }
             
         </style>
     </head>
