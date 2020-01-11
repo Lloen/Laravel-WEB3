@@ -31,8 +31,10 @@ Route::post('/recipes', 'RecipeController@store')->name('recipes.store')->middle
 Route::patch('/recipes/{recipe}', 'RecipeController@update')->name('recipes.update')->middleware('auth');
 Route::delete('/recipes/{recipe}', 'RecipeController@destroy')->name('recipes.destroy')->middleware('auth');
 
+Route::get('profiles', 'UserController@index')->name('users.index')->middleware('auth');
+Route::get('/users/download', 'UserController@download')->name('users.download')->middleware('auth');
 Route::get('/profile/{id}', 'UserController@show')->name('users.show')->middleware('auth');
 Route::get('/profile/{id}/edit', 'UserController@edit')->name('users.edit')->middleware('auth');
-Route::post('/profile', 'UserController@update')->name('users.update')->middleware('auth');
+Route::patch('/profile/{user}', 'UserController@update')->name('users.update')->middleware('auth');
 
 Auth::routes();

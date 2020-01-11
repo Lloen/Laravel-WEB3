@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 use \App\Recipe;
 use App\Policies\RecipePolicy;
+use Illuminate\Support\Facades\Gate as FacadesGate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,8 +26,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        FacadesGate::define('is-admin', function ($user) {
+            return $user->is_admin;
+        });
+        
         $this->registerPolicies();
-
-        //
     }
 }

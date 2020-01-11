@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Gate;
 
 class UserPolicy
 {
@@ -17,7 +18,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return Gate::allows('is-admin');
     }
 
     /**
@@ -52,7 +53,11 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->id === $model->id;
+        if (Gate::allows('is-admin')) {
+            return true;
+        } else {
+            return $user->id === $model->id;
+        }
     }
 
     /**

@@ -147,7 +147,7 @@ class RecipeController extends Controller
         }
 
         foreach(json_decode($request->get('ingredients')) as $ingredient) {
-            $recipe->ingredients()->sync($ingredient->id, ['amount' => $ingredient->amount, 'unit' => $ingredient->unit]);
+            $recipe->ingredients()->sync([$ingredient->id => ['amount' => $ingredient->amount, 'unit' => $ingredient->unit]]);
         }
 
         $recipe->save();
