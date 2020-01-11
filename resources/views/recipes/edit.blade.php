@@ -10,7 +10,7 @@
         <div class="flex-center position-ref full-height">
 
             <div class="content">
-                
+
                 <div id="loadingIndicator" class="spinner-border" role="status" style="display:none; width: 3rem; height: 3rem;">
                     <span class="sr-only">Loading...</span>
                 </div>
@@ -93,6 +93,11 @@
 </div>
 
 <script>
+    //Run script to import input field show file name
+    $(document).ready(function() {
+        bsCustomFileInput.init()
+    })
+
     // On New Ingredient button click, create a new row of ingredient on table
     $('#btnNewIngredient').on('click', function(e) {
         $('.table').find('tbody:last').append('<tr><td><select class="selectpicker" data-width="100%" show-tick data-live-search="true" title="Add an ingredient.." data-style="btn-neutral">@foreach ($ingredients as $ingredient) <option value="{{ $ingredient->id }}">{{$ingredient->name}}</option>@endforeach </select></td><td><input type="number" min="0" step="0.01" class="form-control" id="ingredientAmount" name="ingredient_amount" required></td><td><input class="form-control" id="ingredientUnit" name="ingredient_unit" required></td><td><button id="btnDeleteIngredient" type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button></td></tr>');

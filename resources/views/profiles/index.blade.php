@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<a type="button" class="btn btn-outline-success" href="{{ route('users.download') }}">Download Excel</a>
+<a type="button" class="btn btn-success fixedbutton" href="{{ route('users.download') }}"> <i class="fas fa-file-excel fa-2x pt-1"></i></a>
 <table class="table">
     <thead>
         <tr>
@@ -42,13 +42,13 @@
         }
     });
 
-    $("#btnMakeAdmin").click(function(e) {
+    $("#btnRemoveAdmin").on('click', function(e) {
         var $tr = $(this).closest('tr');
         var userId = $tr.find("th:eq(0)").text();
         formData.append('_method', 'PATCH');
         formData.append('name', $tr.find("td:eq(0)").text());
         formData.append('email', $tr.find("td:eq(1)").text());
-        formData.append('is_admin', '1');
+        formData.append('is_admin', '0');
 
         $.ajax({
             type: 'POST',
@@ -61,13 +61,14 @@
             }
         });
     });
-    $("#btnRemoveAdmin").click(function(e) {
+
+    $("#btnMakeAdmin").on('click', function(e) {
         var $tr = $(this).closest('tr');
         var userId = $tr.find("th:eq(0)").text();
         formData.append('_method', 'PATCH');
         formData.append('name', $tr.find("td:eq(0)").text());
         formData.append('email', $tr.find("td:eq(1)").text());
-        formData.append('is_admin', '0');
+        formData.append('is_admin', '1');
 
         $.ajax({
             type: 'POST',

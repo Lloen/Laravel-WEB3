@@ -62,7 +62,7 @@
                     @foreach ($recipes as $recipe)
                     <div class="col-sm-3">
                         <div class="card h-100">
-                            <img src="storage\images\recipes\{{ $recipe->picture }}" class="card-img-top" alt="...">
+                            <img src="{{ URL::to('/storage/images/recipes/' . $recipe->picture) }}" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $recipe->name }}</h5>
                                 <p class="card-text">{{ $recipe->description }}</p>
