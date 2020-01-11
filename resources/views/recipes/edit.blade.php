@@ -46,22 +46,32 @@
                                 </tr>
                             </thead>
                             <tbody id="ingredientData">
+                                @foreach ($recipe->ingredients as $ingredient)
                                 <tr>
                                     <td>
-                                        <select class="selectpicker show-tick" data-width="100%" data-live-search="true" title="Add an ingredient.." data-style="btn-neutral" name="ingredient" required>
-                                            @foreach ($ingredients as $ingredient)
-                                            <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
+                                        <select class="selectpicker" data-width="100%" show-tick data-live-search="true" title="Add an ingredient.." data-style="btn-neutral">
+                                            @foreach ($ingredients as $ingredientSelect)
+                                            @if ($ingredient->id == $ingredientSelect->id)
+                                            <option value="{{ $ingredientSelect->id }}" selected="selected">{{$ingredientSelect->name}}</option>
+                                            @else
+                                            <option value="{{ $ingredientSelect->id }}" >{{$ingredientSelect->name}}</option>
+                                            @endif
                                             @endforeach
                                         </select>
-                                        <label for="ingredient" generated="true" class="error"></label>
                                     </td>
                                     <td>
-                                        <input type="number" min="0" step="0.01" class="form-control" id="ingredientAmount" name="ingredient_amount" required>
+                                        <input type="number" min="0" step="0.01" class="form-control" id="ingredientAmount" name="ingredient_amount" value="{{ $ingredient->amount }}" required>
                                     </td>
                                     <td>
-                                        <input class="form-control" id="ingredientUnit" name="ingredient_unit" required>
+                                        <input class="form-control" id="ingredientUnit" name="ingredient_unit" value="{{ $ingredient->unit }}" required>
+                                    </td>
+                                    <td>
+                                        <button id="btnDeleteIngredient" type="button" class="btn btn-outline-danger">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                                 <td>

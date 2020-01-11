@@ -10,15 +10,17 @@
                         <img class="rounded float-left" src="/storage/images/recipes/{{ $recipe->picture }}">
                     </div>
                     <div class="col">
-                        <h1 class="card-title">
-                            {{ $recipe->name }}
-                        </h1>
-                        <div class="description">
-                            <p>
-                                {{ $recipe->description }}
-                            </p>
+                        <div class="d-flex flex-column justify-content-end">
+                            <h1 class="card-title">
+                                {{ $recipe->name }}
+                            </h1>
+                            <div class="description">
+                                <p>
+                                    {{ $recipe->description }}
+                                </p>
+                            </div>
                         </div>
-                        <div class="d-flex flex-column mt-auto">
+                        <div class="d-flex flex-column justify-content-end">
                             <div class="votes">
                                 <p>
                                     <i class="far fa-heart mr-2"></i> {{ $recipe->votes }}
@@ -32,10 +34,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex flex-column mt-auto align-items-end">
-                        <a type="button" class="btn btn-outline-success" href="{{ url('/recipes/download/'.$recipe->id) }}">
-                            <i class="fas fa-arrow-down"></i>
-                        </a>
+                    <div class="d-flex flex-column mt-auto">
+
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                         <li>
                             {{ $ingredient->pivot->amount }}
                             {{ $ingredient->pivot->unit }} of
-                            <a href="https://en.wikipedia.org/wiki/{{ $ingredient->wikipedia_id }}" target="_blank"> {{ $ingredient->name }}</a>
+                            <a href="{{ route('ingredients.show', $ingredient->id) }}" > {{ $ingredient->name }}</a>
                         </li>
                         @endforeach
                     </ul>
@@ -72,4 +72,8 @@
         </div>
     </div>
 </div>
+
+<a type="button" class="btn btn-success fixedbutton" href="{{ url('/recipes/download/'.$recipe->id) }}">
+    <i class="fas fa-arrow-down fa-2x pt-1"></i>
+</a>
 @stop
