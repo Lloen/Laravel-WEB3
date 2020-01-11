@@ -13,14 +13,12 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
+//Basic routes
 Route::get('/', function () {return view('home');});
 Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/about', function () {return view('about');});
 
-//Route::resource('recipes', 'RecipeController');
-
+//Recipes routes
 Route::get('recipes', 'RecipeController@index')->name('recipes.index');
 Route::get('/recipes/create', 'RecipeController@create')->name('recipes.create')->middleware('auth');
 Route::get('/recipes/{recipe}/edit', 'RecipeController@edit')->name('recipes.edit')->middleware('auth');
@@ -30,8 +28,19 @@ Route::post('/recipes', 'RecipeController@store')->name('recipes.store')->middle
 Route::patch('/recipes/{recipe}', 'RecipeController@update')->name('recipes.update')->middleware('auth');
 Route::delete('/recipes/{recipe}', 'RecipeController@destroy')->name('recipes.destroy')->middleware('auth');
 
-Route::get('/profile/{id}', 'UserController@show')->name('users.show');
-Route::get('/profile/{id}/edit', 'UserController@edit')->name('users.edit');
-Route::post('/profile', 'UserController@update')->name('users.update');
+//Users routes
+Route::get('/profile/{id}', 'UserController@show')->name('users.show')->middleware('auth');
+Route::get('/profile/{id}/edit', 'UserController@edit')->name('users.edit')->middleware('auth');
+Route::post('/profile', 'UserController@update')->name('users.update')->middleware('auth');
+
+//Ingredients routes
+Route::get('ingredients', function (){
+    return view('ingredients.index');
+});
+Route::get('ingredients/{ingredient}', function (){
+    return view('ingredients.show');
+})->middleware('auth');
+
+
 
 Auth::routes();

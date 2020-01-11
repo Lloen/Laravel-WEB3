@@ -7,52 +7,33 @@
 </div><br />
 @endif
 
-<div class="row">
-    @foreach ($recipes as $recipe)
-    <div class="col-sm-3 mb-4">
-        <div class="card h-100 shadow">
-            @if (Auth::check())
-            <img src="storage\images\recipes\{{ $recipe->picture }}" class="card-img-top" alt="...">
-            @else
-            <img src="storage\images\recipes\{{ $recipe->picture }}" class="card-img-top" style="filter: blur(8px);" alt="...">
-            @endif
-            <div class="card-body">
-                <h5 class="card-title">{{ $recipe->name }}</h5>
-                <p class="card-text">{{ $recipe->description }}</p>
-            </div>
-            <div class="card-footer text-muted">
-                <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-primary w-100">View Recipe</a>
-            </div>
-        </div>
-    </div>
-    @endforeach
-</div>
-@if (Auth::check())
-<a href="{{ route('recipes.create') }}" class="btn btn-success rounded-circle fixedbutton btn-lg shadow " id="btnAddRecipe"><i class="fas fa-plus"></i></a>
-@endif
+<table class="table" id="myTable">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Wikipedia Link</th>
+      <th scope="col">Scientific name</th>
+      <th scope="col">Group</th>
+      <th scope="col">View</th>
+    </tr>
+  </thead>
+  <tbody>
 
-<style>
-    .fixedbutton {
-        position: absolute;
-        bottom: 50px;
-        right: 50px;
-    }
+  </tbody>
+</table>
 
-</style>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#btnAddRecipe').on('click', function(e) {
-            e.preventDefault();
-            var link = this.href;
-            $('.modal').modal('toggle');
-            $('.modal').load(link, function() {
-                $('select').selectpicker();
+<script>
+    $.ajax({
+        url: "{{ url('/api/ingredients') }}",
+        success: function(data) {
+            $.each(data, function( index, value ) {
+                $('#myTable > tbody:last-child').append('<tr><th scope="row">' + data[index].id + '</th><td>' + data[index].name + 
+                '</td><td>' + '<a href="http://wikipedia.org/wiki/"'+ data[index].wikipedia_id + '>' + data[index].name + '</a>' + 
+                '</td><td>' + data[index].name_scientific + '</td><td>' + data[index].group + '</td> <td><a href="/ingredients/'+ data[index].id +'" id="btnView" type="button" class="btn btn-outline-info">Info</a></td> </tr>');
             })
-        });
-
-
+        },
     });
-</script>
 
+</script>
 @stop

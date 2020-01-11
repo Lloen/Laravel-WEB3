@@ -18,8 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request){
     return $request->user();
 });
 
-Route::get('ingredients', 'ApiController@getAllIngredients');
-Route::get('ingredients/{id}', 'ApiController@getIngredient');
-Route::post('ingredients', 'ApiController@createIngredient');
-Route::put('ingredients/{id}', 'ApiController@updateIngredient');
-Route::delete('ingredients/{id}','ApiController@deleteIngredient');
+Route::get('ingredients', 'IngredientApiController@getAllIngredients');
+Route::get('ingredients/{id}', 'IngredientApiController@getIngredient');
+Route::post('ingredients', 'IngredientApiController@createIngredient');
+Route::put('ingredients/{id}', 'IngredientApiController@updateIngredient');
+Route::delete('ingredients/{id}','IngredientApiController@deleteIngredient');

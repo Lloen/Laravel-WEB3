@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ingredient;
-class ApiController extends Controller
+class IngredientApiController extends Controller
 {
     public function getAllIngredients() {
         $ingredients = Ingredient::get();
