@@ -1,3 +1,5 @@
+
+<div><img src="/storage/images/recipes/{{ $recipe->picture }}"></div>
 <h1>{{ $recipe->name }}</h1>
 <p>{{ $recipe->description }}</p>
 <p>Created by: {{ $recipe->user->name }}</p>

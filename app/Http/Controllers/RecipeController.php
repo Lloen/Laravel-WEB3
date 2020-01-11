@@ -195,6 +195,6 @@ class RecipeController extends Controller
         $recipe = Recipe::find($id);
 
         $pdf = PDF::loadView('recipes.download', compact('recipe'));
-        return $pdf->download('recipe.pdf');
+        return $pdf->download($recipe->name.'.pdf');
     }
 }
