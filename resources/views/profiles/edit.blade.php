@@ -9,7 +9,7 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <form method="POST" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data">
-                    @method('POST')
+                    @method('PATCH')
                     @csrf
                     <div class="form-group">
                         <label for="name">Name</label>

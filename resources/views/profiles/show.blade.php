@@ -36,11 +36,15 @@
                     </div>
                     <div class="col-sm">
                         <p>Name: {{ $user->name }}</p>
+                        @if (Auth::user()->id == $user->id)
                         <p>Email: {{ $user->email }}</p>
+                        @endif
                         <p>User since: {{ $user->created_at->format('Y-m-d') }}</p>
                     </div>
                     <div class="col-sm mt-auto ml-auto">
+                        @if (Auth::user()->id == $user->id)
                         <a href="/profile/{{ Auth::user()->id }}/edit" class="btn btn-dark btnEditUser">Edit</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -58,7 +62,7 @@
                     @foreach ($recipes as $recipe)
                     <div class="col-sm-3">
                         <div class="card h-100">
-                        <img src="storage\images\recipes\{{ $recipe->picture }}" class="card-img-top" alt="...">
+                            <img src="{{ URL::to('/storage/images/recipes/' . $recipe->picture) }}" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $recipe->name }}</h5>
                                 <p class="card-text">{{ $recipe->description }}</p>
@@ -66,7 +70,7 @@
                             <div class="card-footer text-muted">
                                 <div class="d-flex justify-content-around">
                                     <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-primary w-100">View</a>
-                                    @if (Auth::user()->can('update', $recipe))
+                                    @if (Auth::user()->id == $recipe->created_by)
                                     <a href="{{ route('recipes.edit', $recipe->id) }}" class="btn btn-dark btnEditRecipe w-100">Edit</a>
                                     <a href="{{ route('recipes.delete', $recipe->id) }}" class="btn btn-danger btnDeleteRecipe w-100">Delete</a>
                                     @endif

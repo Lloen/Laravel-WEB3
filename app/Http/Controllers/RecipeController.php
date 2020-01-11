@@ -6,6 +6,7 @@ use App\FoodsIngredient;
 use App\Ingredient;
 use Illuminate\Http\Request;
 use App\Recipe;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -66,6 +67,8 @@ class RecipeController extends Controller
             $picture = $request->file('picture');
             $pictureName = time().'.'.request()->picture->getClientOriginalExtension();
             $img = Image::make($picture)->resize(715, 479);
+            $watermark = Image::make(storage_path('app/public/images/recipes/Recipe_Watermark.png'));
+            $img->insert($watermark, 'bottom-right', 10, 10);
             $img->save(storage_path('app/public/images/recipes/' . $pictureName));
 
             $recipe->picture = $pictureName;
@@ -101,8 +104,10 @@ class RecipeController extends Controller
     public function edit($id)
     {
         $recipe = Recipe::find($id);
-        $ingredients = Ingredient::select('id', 'name')->orderBy('name', 'ASC')->get();
+        $this->authorize('update', $recipe);
 
+        $ingredients = Ingredient::select('id', 'name')->orderBy('name', 'ASC')->get();
+        
         return view('recipes.edit', compact('recipe', 'ingredients'));
     }
 
@@ -115,6 +120,9 @@ class RecipeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $recipe = Recipe::find($id);
+        $this->authorize('update', $recipe);
+        
         $request->validate([
             'name' => 'required|max:35',
             'description' => 'required|max:255',
@@ -122,10 +130,6 @@ class RecipeController extends Controller
             'cook_time' => 'required',
             'picture' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
         ]);
-
-        $recipe = Recipe::find($id);
-
-        $this->authorize('update', $recipe);
 
         $recipe->name = $request->name;
         $recipe->description = $request->description;
@@ -136,13 +140,16 @@ class RecipeController extends Controller
             $picture = $request->file('picture');
             $pictureName = time().'.'.request()->picture->getClientOriginalExtension();
             $img = Image::make($picture)->resize(715, 479);
+            $watermark = Image::make(storage_path('app/public/images/recipes/Recipe_Watermark.png'));
+            $img->insert($watermark, 'bottom-right', 10, 10);
             $img->save(storage_path('app/public/images/recipes/' . $pictureName));
-
             $recipe->picture = $pictureName;
         }
 
+        $recipe->ingredients()->detach();
+
         foreach(json_decode($request->get('ingredients')) as $ingredient) {
-            $recipe->ingredients()->sync($ingredient->id, ['amount' => $ingredient->amount, 'unit' => $ingredient->unit]);
+            $recipe->ingredients()->attach([$ingredient->id => ['amount' => $ingredient->amount, 'unit' => $ingredient->unit]]);
         }
 
         $recipe->save();
@@ -177,5 +184,19 @@ class RecipeController extends Controller
         $recipe->delete();
 
         return redirect('/profile/'.$recipe->created_by)->with('success', 'Recipe has been deleted!');
+    }
+
+    /**
+     * Download the recipe as PDF.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function download($id)
+    {
+        $recipe = Recipe::find($id);
+
+        $pdf = PDF::loadView('recipes.download', compact('recipe'));
+        return $pdf->download($recipe->name.'.pdf');
     }
 }

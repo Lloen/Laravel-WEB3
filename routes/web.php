@@ -20,6 +20,7 @@ Route::get('/about', function () {return view('about');});
 
 //Recipes routes
 Route::get('recipes', 'RecipeController@index')->name('recipes.index');
+Route::get('/recipes/download/{id}', 'RecipeController@download')->name('recipes.download')->middleware('auth');
 Route::get('/recipes/create', 'RecipeController@create')->name('recipes.create')->middleware('auth');
 Route::get('/recipes/{recipe}/edit', 'RecipeController@edit')->name('recipes.edit')->middleware('auth');
 Route::get('/recipes/{recipe}', 'RecipeController@show')->name('recipes.show')->middleware('auth');
@@ -28,10 +29,12 @@ Route::post('/recipes', 'RecipeController@store')->name('recipes.store')->middle
 Route::patch('/recipes/{recipe}', 'RecipeController@update')->name('recipes.update')->middleware('auth');
 Route::delete('/recipes/{recipe}', 'RecipeController@destroy')->name('recipes.destroy')->middleware('auth');
 
-//Users routes
+
+Route::get('profiles', 'UserController@index')->name('users.index')->middleware('auth');
+Route::get('/users/download', 'UserController@download')->name('users.download')->middleware('auth');
 Route::get('/profile/{id}', 'UserController@show')->name('users.show')->middleware('auth');
 Route::get('/profile/{id}/edit', 'UserController@edit')->name('users.edit')->middleware('auth');
-Route::post('/profile', 'UserController@update')->name('users.update')->middleware('auth');
+Route::patch('/profile/{user}', 'UserController@update')->name('users.update')->middleware('auth');
 
 //Ingredients routes
 Route::get('ingredients', function (){
@@ -40,7 +43,5 @@ Route::get('ingredients', function (){
 Route::get('ingredients/{ingredient}', function (){
     return view('ingredients.show');
 })->middleware('auth');
-
-
 
 Auth::routes();

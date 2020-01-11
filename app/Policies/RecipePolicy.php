@@ -6,6 +6,7 @@ use App\Recipe;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class RecipePolicy
 {
@@ -54,7 +55,11 @@ class RecipePolicy
      */
     public function update(User $user, Recipe $recipe)
     {
-        return $user->id === $recipe->created_by;
+        if (Gate::allows('is-admin')) {
+            return true;
+        } else {
+            return $user->id === $recipe->created_by;
+        }
     }
 
     /**
@@ -66,7 +71,11 @@ class RecipePolicy
      */
     public function delete(User $user, Recipe $recipe)
     {
-        return $user->id === $recipe->created_by;
+        if (Gate::allows('is-admin')) {
+            return true;
+        } else {
+            return $user->id === $recipe->created_by;
+        }
     }
 
     /**

@@ -12,9 +12,9 @@
     <div class="col-sm-3 mb-4">
         <div class="card h-100 shadow">
             @if (Auth::check())
-            <img src="storage\images\recipes\{{ $recipe->picture }}" class="card-img-top" alt="...">
+            <img src="{{ URL::to('/storage/images/recipes/' . $recipe->picture) }}" class="card-img-top" alt="...">
             @else
-            <img src="storage\images\recipes\{{ $recipe->picture }}" class="card-img-top" style="filter: blur(8px);" alt="...">
+            <img src="{{ URL::to('/storage/images/recipes/' . $recipe->picture) }}" class="card-img-top" style="filter: blur(8px);" alt="...">
             @endif
             <div class="card-body">
                 <h5 class="card-title">{{ $recipe->name }}</h5>
@@ -28,17 +28,8 @@
     @endforeach
 </div>
 @if (Auth::check())
-<a href="{{ route('recipes.create') }}" class="btn btn-success rounded-circle fixedbutton btn-lg shadow " id="btnAddRecipe"><i class="fas fa-plus"></i></a>
+<a href="{{ route('recipes.create') }}" class="btn btn-success rounded-circle fixedbutton btn-lg shadow " id="btnAddRecipe"><i class="fas fa-plus pt-2"></i></a>
 @endif
-
-<style>
-    .fixedbutton {
-        position: absolute;
-        bottom: 50px;
-        right: 50px;
-    }
-
-</style>
 
 <script type="text/javascript">
     $(document).ready(function() {
