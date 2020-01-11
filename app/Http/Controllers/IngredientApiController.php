@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ingredient;
-class ApiController extends Controller
+class IngredientApiController extends Controller
 {
     public function getAllIngredients() {
         $ingredients = Ingredient::get();
@@ -38,8 +38,7 @@ class ApiController extends Controller
         } 
         else {
             return response()->json([
-              "message" => "Ingredient not found"
-            ], 404);
+              "message" => "Ingredient not found"], 404);
         }
     }
   
