@@ -29,7 +29,7 @@ class ApiController extends Controller
         return response()->json(["message" => "Ingredient record created"], 201);
     }
   
-      public function getIngredient($id) {
+    public function getIngredient($id) {
         if (Ingredient::where('id', $id)->exists()) {
             $ingredient = Ingredient::find($id);
             $ingredient->picture = base64_encode($ingredient->picture);
@@ -43,11 +43,36 @@ class ApiController extends Controller
         }
     }
   
-      public function updateIngredient(Request $request, $id) {
-        // logic to update a student record goes here
+    public function updateIngredient(Request $request, $id) {
+        if (Ingredient::where('id', $id)->exists()) {
+          $ingredient = Ingredient::find($id);
+          $ingredient->name = is_null($request->name) ? $ingredient->name : $request->name;
+          $ingredient->description = is_null($request->course) ? $ingredient->course : $request->course;
+          $ingredient->wikipedia_id = is_null($request->wikipedia_id) ? $ingredient->wikipedia_id : $request->wikipedia_id;
+          $ingredient->name_scientific = is_null($request->name_scientific) ? $ingredient->name_scientific : $request->name_scientific;
+          $ingredient->group = is_null($request->group) ? $ingredient->group : $request->group;
+          $ingredient->updated_by = is_null($request->updated_by) ? $ingredient->updated_by : $request->updated_by;
+          $ingredient->save();
+  
+          return response()->json(["message" => "Record updated successfully"], 200);
+        } 
+        else {
+          return response()->json(["message" => "Ingredient not found"], 404);
+        }
     }
   
-      public function deleteIngredient ($id) {
-        // logic to delete a student record goes here
+
+
+    public function deleteIngredient ($id) {
+      if(Ingredient::where('id', $id)->exists()) {
+        $ingredient = Ingredient::find($id);
+        $ingredient->delete();
+        return response()->json(["message" => "record deleted"], 202);
+      } 
+
+      else {
+        return response()->json(["message" => "Ingredient not found"], 404);
+      }
+
     }
 }
