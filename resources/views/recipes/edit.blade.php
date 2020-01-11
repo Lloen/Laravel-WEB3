@@ -139,7 +139,7 @@
             }).get();
 
             var formData = new FormData();
-            formData.append('_method', 'PATCH');
+            formData.append('_method', 'PUT');
             formData.append('name', $("input[name=name]").val());
             formData.append('description', $("input[name=description]").val());
             formData.append('prep_time', $("input[name=prep_time]").val());
@@ -149,7 +149,7 @@
                 formData.append('picture', $('#recipeInputPicture')[0].files[0]);
 
             $.ajax({
-                type: 'POST',
+                type: 'PUT',
                 url: "{{ route('recipes.update', $recipe->id) }}",
                 contentType: false,
                 processData: false,

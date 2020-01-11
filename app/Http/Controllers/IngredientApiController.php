@@ -34,12 +34,15 @@ class IngredientApiController extends Controller
   
     public function updateIngredient(Request $request, $id) {
         if (Ingredient::where('id', $id)->exists()) {
+      
           $ingredient = Ingredient::find($id);
-          $ingredient->name = is_null($request->name) ? $ingredient->name : $request->name;
-          $ingredient->description = is_null($request->course) ? $ingredient->course : $request->course;
-          $ingredient->wikipedia_id = is_null($request->wikipedia_id) ? $ingredient->wikipedia_id : $request->wikipedia_id;
-          $ingredient->name_scientific = is_null($request->name_scientific) ? $ingredient->name_scientific : $request->name_scientific;
-          $ingredient->group = is_null($request->group) ? $ingredient->group : $request->group;
+
+          $ingredient->name -> $request->get('name');
+          $ingredient->description -> $request->get('description');
+          $ingredient->wikipedia_id -> basename($request->get('wikipedia_id'));
+          $ingredient->name_scientific -> $request->get('name_scientific');
+          $ingredient->group -> $request->get('group');
+
           $ingredient->save();
   
           return response()->json(["message" => "Record updated successfully"], 200);
@@ -63,7 +66,7 @@ class IngredientApiController extends Controller
       'description' => $request->get('description'),
       'wikipedia_id' => basename($request->get('wikipedia_id')),
       'name_scientific' => $request->get('name_scientific'),
-      'group' => $request->get('name_scientific')
+      'group' => $request->get('group')
     ]);
 
     $ingredient->save();

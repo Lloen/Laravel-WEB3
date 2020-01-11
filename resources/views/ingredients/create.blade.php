@@ -53,6 +53,7 @@
 
     $('#btnSubmit').click(function() {
         var formData = new FormData();
+        formData.append('_method', 'POST');
         formData.append('name', $("input[name=name]").val());
         formData.append('description', $("input[name=description]").val());
         formData.append('wikipedia_id', $("input[name=wikipedia_id]").val());

@@ -15,22 +15,22 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Description</label>
+                        <label for="description">Description</label>
                         <textarea class="form-control" id="descriptionInput" name="description" ></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label for="avatar">Wikipedia link</label>
-                        <input class="form-control" id="wikipediaInput" name="wikipediaLink" >
+                        <label for="wikipediaLink">Wikipedia link</label>
+                        <input class="form-control" id="wikipediaInput" name="wikipedia_id" >
                     </div>
 
                     <div class="form-group">
-                        <label for="avatar">Scientific name</label>
-                        <input class="form-control" id="scientificInput" name="scientificName" >
+                        <label for="scientificName">Scientific name</label>
+                        <input class="form-control" id="scientificInput" name="name_scientific" >
                     </div>
 
                     <div class="form-group">
-                        <label for="avatar">Group</label>
+                        <label for="group">Group</label>
                         <input class="form-control" id="groupInput" name="group" >
                     </div>
                 </form>
@@ -65,12 +65,10 @@
         formData.append('wikipedia_id', $("input[name=wikipedia_id]").val());
         formData.append('name_scientific', $("input[name=name_scientific]").val());
         formData.append('group', $("input[name=group]").val());
-        // if ($('#recipeInputPicture')[0].files[0] != undefined)
-        //     formData.append('picture', $('#recipeInputPicture')[0].files[0]);
 
         $.ajax({
             url: '/api/ingredients/{{$id}}',
-            type: 'PUT',
+            type: 'POST',
             contentType: false,
             processData: false,
             data: formData,
