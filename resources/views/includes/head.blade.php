@@ -57,6 +57,7 @@
         color: #fff;
         background-color: #ffffff;
         border: 1px solid #ced4da;
+        color: black;
     }
 
     #loading-indicator {

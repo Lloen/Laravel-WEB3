@@ -18,7 +18,7 @@
                                 {{ $recipe->description }}
                             </p>
                         </div>
-                        <div class="d-flex flex-column justify-content-end">
+                        <div class="d-flex flex-column mt-auto">
                             <div class="votes">
                                 <p>
                                     <i class="far fa-heart mr-2"></i> {{ $recipe->votes }}
@@ -31,6 +31,11 @@
                                 </p>
                             </div>
                         </div>
+                    </div>
+                    <div class="d-flex flex-column mt-auto align-items-end">
+                        <a type="button" class="btn btn-outline-success" href="{{ url('/recipes/download/'.$recipe->id) }}">
+                            <i class="fas fa-arrow-down"></i>
+                        </a>
                     </div>
                 </div>
             </div>
