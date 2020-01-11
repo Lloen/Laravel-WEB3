@@ -34,9 +34,7 @@ class IngredientsTableSeeder extends Seeder
                 'wikipedia_id' => $obj->wikipedia_id,
                 'name_scientific' => $obj->name_scientific,
                 'group' => $obj->food_group,
-                'picture' => $img,
-                'created_by' => 1,
-                'updated_by' => 1
+                'picture' => $img
             ));
 
             if ($obj->name == "Cucumber") {

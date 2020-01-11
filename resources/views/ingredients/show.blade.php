@@ -8,7 +8,7 @@
                 <div class="col">
                     <h1 class="card-title" id="ingredientName">
 
-                     </h1>
+                    </h1>
                 </div>
                 <div class="row">
                     <div class="col" class="rounded float-left" id="picture" height="400" width="400">
@@ -16,43 +16,43 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="card-body">
+        <div class="d-flex flex-row mb-3">
+            <i class="fas fa-list-ul fa-3x p-2"></i>
+            <div class="prep_time p-2 ml-2">
+                <p id="scientificName">SCIENTIFIC NAME</br>
+
+            </div>
+            <div class="cooking_time p-2">
+                <p id="wikilink">WIKIPEDIA LINK </br>
+
+            </div>
+            <div class="cooking_time p-2">
+                <p id="group">GROUP </br>
+
+            </div>
         </div>
         <div class="card-body">
-            <div class="d-flex flex-row mb-3">
-                <i class="fas fa-list-ul fa-3x p-2"></i>
-                <div class="prep_time p-2 ml-2">
-                    <p id="scientificName">SCIENTIFIC NAME</br>
-
-                </div>
-                <div class="cooking_time p-2">
-                    <p id="wikilink">WIKIPEDIA LINK </br>
-
-                </div>
-                <div class="cooking_time p-2">
-                    <p id="group">GROUP </br>
-
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="description">
-                    <p id="ingredientDescription">
-                    </p>
-                </div>
+            <div class="description">
+                <p id="ingredientDescription">
+                </p>
             </div>
         </div>
     </div>
 </div>
+</div>
 
 <script>
-var id = '{{request()->route("ingredient")}}';
+    var id = '{{request()->route("ingredient")}}';
 
-$.ajax({
+    $.ajax({
         url: "/api/ingredients/ " + id,
         success: function(data) {
             $('#ingredientName').append(data.name);
             $('#ingredientDescription').append(data.description);
             $('#group').append(data.group);
-            $('#wikilink').append('<a href="http://wikipedia.org/wiki/'+ data.wikipedia_id + '">' + data.name + '</a>');
+            $('#wikilink').append('<a href="http://wikipedia.org/wiki/' + data.wikipedia_id + '">' + data.name + '</a>');
             $('#scientificName').append(data.name_scientific);
             $('#picture').append('<img src="data:image/png;base64,' + data.picture + '" class="card-img-top">');
         },

@@ -39,8 +39,12 @@ Route::patch('/profile/{user}', 'UserController@update')->name('users.update')->
 Route::get('ingredients', function (){
     return view('ingredients.index');
 })->name('ingredients.index');
-Route::get('ingredients/{ingredient}', function (){
+Route::get('/ingredients/create', function (){
+    return view('ingredients.create');
+})->name('ingredients.create')->middleware('auth');
+Route::get('/ingredients/{ingredient}', function (){
     return view('ingredients.show');
 })->name('ingredients.show')->middleware('auth');
+
 
 Auth::routes();
