@@ -18,7 +18,6 @@ class IngredientApiController extends Controller
     return response($ingredients, 200);
   }
 
-
     public function getIngredient($id) {
         if (Ingredient::where('id', $id)->exists()) {
             $ingredient = Ingredient::find($id);
@@ -73,7 +72,6 @@ class IngredientApiController extends Controller
 
     return response()->json(["message" => "Ingredient record created"], 201);
   }
-
 
   public function deleteIngredient($id)
   {
