@@ -21,7 +21,13 @@
                 <p class="card-text">{{ $recipe->description }}</p>
             </div>
             <div class="card-footer text-muted">
-                <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-primary w-100">View Recipe</a>
+                <div class="d-flex justify-content-around">
+                    <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-primary w-100">View</a>
+                    @if (Auth::user()->id == $recipe->created_by)
+                    <a href="{{ route('recipes.edit', $recipe->id) }}" class="btn btn-dark btnEditRecipe w-100">Edit</a>
+                    <a href="{{ route('recipes.delete', $recipe->id) }}" class="btn btn-danger btnDeleteRecipe w-100">Delete</a>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
@@ -50,8 +56,6 @@
             $('select').selectpicker();
             })
         });
-
-
     });
 </script>
 
