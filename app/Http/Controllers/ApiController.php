@@ -38,8 +38,7 @@ class ApiController extends Controller
         } 
         else {
             return response()->json([
-              "message" => "Ingredient not found"
-            ], 404);
+              "message" => "Ingredient not found"], 404);
         }
     }
   
