@@ -7,8 +7,6 @@
     * Admins can: CRUD all recipes and ingredients, access list of users (/profiles), download the Excel file of users and make other users admins.
     * Logged in users can: Create recipes, Read all recipes and Update & Delete their own recipes.
     * Anoymous user can: only see the index or recipes.
-
-### Main Points
 * The PDF can be downloaded from the Read of the recipe. The excel can be downloaded from the index of users and api is placed at /api/ingredients.
 * Every recipe image update has a webiste logo watermark on the bottom right corner, all user images are resized to 30x30 before storing.
 * Every ingredient image is stored on the database, rest of the images is stored on the Laravel server (storage/app/public/images).
