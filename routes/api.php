@@ -21,5 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request){
 Route::get('ingredients', 'IngredientApiController@getAllIngredients');
 Route::get('ingredients/{id}', 'IngredientApiController@getIngredient');
 Route::post('ingredients', 'IngredientApiController@createIngredient');
-Route::put('ingredients/{id}', 'IngredientApiController@updateIngredient');
+Route::post('ingredients/{id}', 'IngredientApiController@updateIngredient');
 Route::delete('ingredients/{id}','IngredientApiController@deleteIngredient');

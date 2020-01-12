@@ -58,12 +58,6 @@ class UserController extends Controller
 
         $this->authorize('update', $user);
 
-        $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:225|unique:users,email,' . $id,
-            'avatar' => 'sometimes|image|mimes:jpeg,png,jpg,svg|max:2048'
-        ]);
-
         if (request()->has('avatar')) {
             $avatar = $request->file('avatar');
             $avatarName = $id . '-' . time() . '.' . request()->avatar->getClientOriginalExtension();

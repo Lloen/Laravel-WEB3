@@ -11,8 +11,6 @@ class Ingredient extends Model
         'description',
         'wkipedia_id',
         'name_scientific',
-        'group',
-        'updated_by',
-        'created_by'
+        'group'
     ];
 }

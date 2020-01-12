@@ -59,22 +59,22 @@
 
     //update ingredient on button sumbmit
     $('#btnSubmit').click(function() {
-        var ingredient = {
-            name: $("input[name=name]").val(),
-            description: $("input[name=description]").val(),
-            wikipedia_id: $("input[name=wikipedia_id]").val(),
-            name_scientific: $("input[name=name_scientific]").val(),
-            group: $("input[name=group]").val()
-        };
+        var formData = new FormData();
+        formData.append('_method', 'POST');
+        formData.append('name', $("input[name=name]").val());
+        formData.append('description', $("input[name=description]").val());
+        formData.append('wikipedia_id', $("input[name=wikipedia_id]").val());
+        formData.append('name_scientific', $("input[name=name_scientific]").val());
+        formData.append('group', $("input[name=group]").val());
+
         $.ajax({
             url: '/api/ingredients/{{$id}}',
-            type: 'PUT',
+            type: 'POST',
             contentType: false,
             processData: false,
-            data: JSON.stringify(ingredient),
+            data: formData,
 
             success: function(result) {
-                alert("asdsad");
                 location.reload();
             }
         });
