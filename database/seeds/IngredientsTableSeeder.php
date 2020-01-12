@@ -40,6 +40,10 @@ class IngredientsTableSeeder extends Seeder
             if ($obj->name == "Cucumber") {
                 DB::insert("INSERT INTO `ingredient_recipe` (`ingredient_id`, `recipe_id`, `amount`, `unit`) VALUES ('1', '1', '1', 'Piece')");
             }
+
+            if ($obj->name == "Sweet potato") {
+                DB::insert("INSERT INTO `ingredient_recipe` (`ingredient_id`, `recipe_id`, `amount`, `unit`) VALUES ('2', '2', '1', 'Piece')");
+            }
         }
     }
 }

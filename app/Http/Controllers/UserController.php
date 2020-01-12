@@ -49,7 +49,6 @@ class UserController extends Controller
         $user = User::find($id);
         $this->authorize('update', $user);
 
-
         return view('profiles.edit', compact('user'));
     }
 

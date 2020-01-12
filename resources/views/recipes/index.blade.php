@@ -23,9 +23,11 @@
             <div class="card-footer text-muted">
                 <div class="d-flex justify-content-around">
                     <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-primary w-100">View</a>
-                    @if (Auth::user()->id == $recipe->created_by)
-                    <a href="{{ route('recipes.edit', $recipe->id) }}" class="btn btn-dark btnEditRecipe w-100">Edit</a>
-                    <a href="{{ route('recipes.delete', $recipe->id) }}" class="btn btn-danger btnDeleteRecipe w-100">Delete</a>
+                    @if (Auth::check())
+                        @if (Auth::user()->can('update', $recipe))
+                        <a href="{{ route('recipes.edit', $recipe->id) }}" class="btn btn-dark btnEditRecipe w-100">Edit</a>
+                        <a href="{{ route('recipes.delete', $recipe->id) }}" class="btn btn-danger btnDeleteRecipe w-100">Delete</a>
+                        @endif
                     @endif
                 </div>
             </div>
@@ -43,7 +45,6 @@
         bottom: 50px;
         right: 50px;
     }
-
 </style>
 
 <script type="text/javascript">
@@ -53,7 +54,7 @@
             var link = this.href;
             $('.modal').modal('toggle');
             $('.modal').load(link, function() {
-            $('select').selectpicker();
+                $('select').selectpicker();
             })
         });
     });
