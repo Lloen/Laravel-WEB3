@@ -16,7 +16,7 @@
 
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea class="form-control" id="descriptionInput" name="description" ></textarea>
+                        <input class="form-control" id="descriptionInput" name="description" ></input>
                     </div>
 
                     <div class="form-group">
@@ -44,7 +44,7 @@
 </div>
 
 <script>
-    
+    // get ingredient data to display it in input form
     $.ajax({
         url: '/api/ingredients/{{$id}}',
         type: 'GET',
@@ -57,25 +57,28 @@
         },
     });
 
-
+    //update ingredient on button sumbmit
     $('#btnSubmit').click(function() {
-        var formData = new FormData();
-        formData.append('name', $("input[name=name]").val());
-        formData.append('description', $("input[name=description]").val());
-        formData.append('wikipedia_id', $("input[name=wikipedia_id]").val());
-        formData.append('name_scientific', $("input[name=name_scientific]").val());
-        formData.append('group', $("input[name=group]").val());
-
+        var ingredient = {
+            name: $("input[name=name]").val(),
+            description: $("input[name=description]").val(),
+            wikipedia_id: $("input[name=wikipedia_id]").val(),
+            name_scientific: $("input[name=name_scientific]").val(),
+            group: $("input[name=group]").val()
+        };
         $.ajax({
             url: '/api/ingredients/{{$id}}',
-            type: 'POST',
+            type: 'PUT',
             contentType: false,
             processData: false,
-            data: formData,
+            data: JSON.stringify(ingredient),
+
             success: function(result) {
+                alert("asdsad");
                 location.reload();
             }
         });
     });
 
 </script>
+
