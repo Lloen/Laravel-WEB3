@@ -15,22 +15,22 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Description</label>
-                        <textarea class="form-control" id="descriptionInput" name="description" ></textarea>
+                        <label for="description">Description</label>
+                        <input class="form-control" id="descriptionInput" name="description" ></input>
                     </div>
 
                     <div class="form-group">
-                        <label for="avatar">Wikipedia link</label>
-                        <input class="form-control" id="wikipediaInput" name="wikipediaLink" >
+                        <label for="wikipediaLink">Wikipedia link</label>
+                        <input class="form-control" id="wikipediaInput" name="wikipedia_id" >
                     </div>
 
                     <div class="form-group">
-                        <label for="avatar">Scientific name</label>
-                        <input class="form-control" id="scientificInput" name="scientificName" >
+                        <label for="scientificName">Scientific name</label>
+                        <input class="form-control" id="scientificInput" name="name_scientific" >
                     </div>
 
                     <div class="form-group">
-                        <label for="avatar">Group</label>
+                        <label for="group">Group</label>
                         <input class="form-control" id="groupInput" name="group" >
                     </div>
                 </form>
@@ -44,7 +44,7 @@
 </div>
 
 <script>
-    
+    // get ingredient data to display it in input form
     $.ajax({
         url: '/api/ingredients/{{$id}}',
         type: 'GET',
@@ -57,27 +57,28 @@
         },
     });
 
-
+    //update ingredient on button sumbmit
     $('#btnSubmit').click(function() {
-        var formData = new FormData();
-        formData.append('name', $("input[name=name]").val());
-        formData.append('description', $("input[name=description]").val());
-        formData.append('wikipedia_id', $("input[name=wikipedia_id]").val());
-        formData.append('name_scientific', $("input[name=name_scientific]").val());
-        formData.append('group', $("input[name=group]").val());
-        // if ($('#recipeInputPicture')[0].files[0] != undefined)
-        //     formData.append('picture', $('#recipeInputPicture')[0].files[0]);
-
+        var ingredient = {
+            name: $("input[name=name]").val(),
+            description: $("input[name=description]").val(),
+            wikipedia_id: $("input[name=wikipedia_id]").val(),
+            name_scientific: $("input[name=name_scientific]").val(),
+            group: $("input[name=group]").val()
+        };
         $.ajax({
             url: '/api/ingredients/{{$id}}',
             type: 'PUT',
             contentType: false,
             processData: false,
-            data: formData,
+            data: JSON.stringify(ingredient),
+
             success: function(result) {
+                alert("asdsad");
                 location.reload();
             }
         });
     });
 
 </script>
+
