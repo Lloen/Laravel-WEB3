@@ -1,5 +1,8 @@
 # Recipe Book
 ## WEB3 Lloen and Daniel
+A Fontys University project for the WEB3 class.
+### Description
+A website that allows users to create and see food recipes.
 ### Remarks
 * To complete the ingredients seeding, it might take up to 20 minutes. CTRL+C anytime during the IngredientTableSeeder to stop the seed.
 * The envExample.txt contains an example of the env file to use.
